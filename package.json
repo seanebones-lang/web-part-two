@@ -1,0 +1,39 @@
+{
+  "name": "web-part-two",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@ai-sdk/openai": "^3.0.53",
+    "@ai-sdk/react": "^3.0.170",
+    "@portabletext/react": "^6.0.3",
+    "@sanity/image-url": "^2.1.1",
+    "@sanity/vision": "^5.22.0",
+    "ai": "^6.0.168",
+    "clsx": "^2.1.1",
+    "lenis": "^1.3.23",
+    "lucide-react": "^1.11.0",
+    "motion": "^12.38.0",
+    "next": "16.2.4",
+    "next-sanity": "^12.3.1",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "sanity": "^5.22.0",
+    "tailwind-merge": "^3.5.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.4",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}

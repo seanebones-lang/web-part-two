@@ -1,0 +1,31 @@
+import type { Metadata } from "next";
+
+import type { SanityProduct } from "@/lib/sanity-types";
+import { productsQuery } from "@/sanity/lib/queries";
+import { sanityFetch } from "@/sanity/lib/client";
+
+import { ProductsSection } from "@/components/sections/products-section";
+
+export const metadata: Metadata = {
+  title: "Products",
+  description:
+    "Platforms and modules we ship alongside custom builds — titles and copy are managed in Sanity.",
+};
+
+export default async function ProductsPage() {
+  const products = (await sanityFetch<SanityProduct[]>(productsQuery)) ?? [];
+
+  return (
+    <div>
+      <div className="mx-auto max-w-6xl px-4 pb-4 pt-16 sm:px-6">
+        <h1 className="text-4xl font-semibold tracking-tight text-[var(--text-primary)]">
+          Products
+        </h1>
+        <p className="mt-4 max-w-2xl text-[var(--text-muted)]">
+          Offerings designed to complement custom programs — extend descriptions and CTAs from Sanity.
+        </p>
+      </div>
+      <ProductsSection products={products} showIntro={false} />
+    </div>
+  );
+}
