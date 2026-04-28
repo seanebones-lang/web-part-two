@@ -1,3 +1,5 @@
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+
 const moats = [
   {
     title: "Speed to production",
@@ -35,6 +37,7 @@ export function WhyNextEleven() {
   return (
     <section id="why" className="scroll-mt-24 border-y border-[var(--border-subtle)] bg-[var(--bg-elevated)]/40 py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionEyebrow>01 · Differentiators</SectionEyebrow>
         <h2 className="max-w-3xl text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
           Why teams choose NextEleven
         </h2>

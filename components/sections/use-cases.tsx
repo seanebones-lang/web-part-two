@@ -1,3 +1,5 @@
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+
 const stories = [
   {
     title: "Finance",
@@ -25,6 +27,7 @@ export function UseCases() {
   return (
     <section className="py-24">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionEyebrow>02 · Verticals</SectionEyebrow>
         <h2 className="text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
           Use cases — regulated & mission-critical AI
         </h2>

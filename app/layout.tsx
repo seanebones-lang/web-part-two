@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Syne } from "next/font/google";
 
 import { AppProviders } from "@/components/providers/app-providers";
 
@@ -13,6 +13,13 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+/** Display-only — hero headlines; keeps UI body in Geist */
+const syne = Syne({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -40,7 +47,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${geistSans.variable} ${geistMono.variable} h-full scroll-smooth antialiased`}
+      className={`dark ${geistSans.variable} ${geistMono.variable} ${syne.variable} h-full scroll-smooth antialiased`}
     >
       <body className="noise-overlay bg-[var(--bg-deep)] font-sans text-[var(--text-primary)]">
         <AppProviders>{children}</AppProviders>

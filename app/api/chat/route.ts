@@ -1,14 +1,39 @@
 import { createOpenAI } from "@ai-sdk/openai";
-import { streamText } from "ai";
+import {
+  convertToModelMessages,
+  stepCountIs,
+  streamText,
+  type UIMessage,
+} from "ai";
 
+import { messagesContainImageParts } from "@/lib/chat-has-image";
 import { NEXT_ELEVEN_CHAT_SYSTEM } from "@/lib/chat-system";
+import { nextElevenChatTools } from "@/lib/chat-tools";
 
-export const maxDuration = 60;
+export const maxDuration = 120;
 
 const xai = createOpenAI({
   baseURL: "https://api.x.ai/v1",
   apiKey: process.env.XAI_API_KEY ?? "",
 });
+
+function resolveModelId(raw: unknown): string {
+  const fallback = process.env.XAI_MODEL ?? "grok-2-latest";
+  if (typeof raw !== "string") return fallback;
+  const t = raw.trim();
+  if (/^grok-[a-z0-9._-]+$/i.test(t)) return t;
+  return fallback;
+}
+
+function pickModel(messages: UIMessage[], bodyModel: unknown): string {
+  const hasImage = messagesContainImageParts(messages);
+  if (hasImage) {
+    const visionDefault =
+      process.env.XAI_VISION_MODEL ?? process.env.XAI_MODEL ?? "grok-2-latest";
+    return resolveModelId(visionDefault);
+  }
+  return resolveModelId(bodyModel);
+}
 
 export async function POST(req: Request) {
   if (!process.env.XAI_API_KEY) {
@@ -35,7 +60,8 @@ export async function POST(req: Request) {
 
   const messages = (
     body as {
-      messages?: { role: string; content: string }[];
+      messages?: UIMessage[];
+      model?: unknown;
     }
   ).messages;
 
@@ -46,30 +72,20 @@ export async function POST(req: Request) {
     });
   }
 
-  const modelId =
-    process.env.XAI_MODEL ??
-    "grok-2-latest";
+  const bodyModel = (body as { model?: unknown }).model;
+  const modelId = pickModel(messages, bodyModel);
 
-  const validMessages = messages.filter(
-    (m): m is { role: "user" | "assistant"; content: string } =>
-      (m.role === "user" || m.role === "assistant") && typeof m.content === "string",
-  );
-
-  if (!validMessages.length) {
-    return new Response(
-      JSON.stringify({ error: "At least one user or assistant message required" }),
-      { status: 400, headers: { "Content-Type": "application/json" } },
-    );
-  }
+  const modelMessages = await convertToModelMessages(messages, {
+    tools: nextElevenChatTools,
+  });
 
   const result = streamText({
     model: xai(modelId),
     system: NEXT_ELEVEN_CHAT_SYSTEM,
-    messages: validMessages.map((m) => ({
-      role: m.role,
-      content: m.content,
-    })),
+    messages: modelMessages,
+    tools: nextElevenChatTools,
+    stopWhen: stepCountIs(14),
   });
 
-  return result.toTextStreamResponse();
+  return result.toUIMessageStreamResponse();
 }

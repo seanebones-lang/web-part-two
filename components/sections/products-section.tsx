@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 import type { SanityProduct } from "@/lib/sanity-types";
 import { cn } from "@/lib/utils";
 import { urlFor } from "@/sanity/lib/image";
@@ -45,10 +46,8 @@ export function ProductsSection({
     >
       {showIntro ? (
         <div className="max-w-2xl">
-          <p className="text-sm font-medium uppercase tracking-wider text-[var(--accent)]">
-            Platforms & modules
-          </p>
-          <h2 className="mt-2 text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
+          <SectionEyebrow>03 · Platforms</SectionEyebrow>
+          <h2 className="mt-1 text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
             Products that ship beside custom builds
           </h2>
         <p className="mt-4 text-[var(--text-muted)]">

@@ -1,7 +1,10 @@
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+
 export function Team() {
   return (
     <section className="border-y border-[var(--border-subtle)] bg-gradient-to-b from-transparent via-cyan-500/[0.06] to-transparent py-24">
       <div className="mx-auto max-w-6xl px-4 text-center sm:px-6">
+        <SectionEyebrow centered>04 · Operators</SectionEyebrow>
         <p className="text-sm font-semibold uppercase tracking-[0.3em] text-[var(--accent)]">
           Builders, not talkers
         </p>

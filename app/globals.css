@@ -32,6 +32,15 @@
     background: var(--accent-dim);
     color: var(--text-primary);
   }
+
+  :where(a, button, input, textarea, select, summary):focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  :where(a, button, input, textarea, select, summary):focus:not(:focus-visible) {
+    outline: none;
+  }
 }
 
 /* Film grain overlay (subtle) */
@@ -65,6 +74,91 @@
   );
   border: 1px solid var(--border-subtle);
   backdrop-filter: blur(12px);
+  transition:
+    transform 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease,
+    border-color 0.22s ease,
+    filter 0.2s ease;
+}
+
+.glass-panel:hover {
+  transform: scale(1.018);
+  border-color: rgba(34, 211, 238, 0.22);
+  box-shadow:
+    0 18px 52px -26px rgba(0, 0, 0, 0.58),
+    0 0 44px -10px rgba(34, 211, 238, 0.42),
+    0 0 64px -18px rgba(167, 139, 250, 0.32);
+}
+
+/** Chat modal: keep glass look without scaling the whole panel while typing */
+.glass-panel.glass-panel--static {
+  transition: border-color 0.22s ease, box-shadow 0.3s ease;
+}
+
+.glass-panel.glass-panel--static:hover {
+  transform: none;
+  border-color: rgba(34, 211, 238, 0.18);
+  box-shadow:
+    0 0 52px -14px rgba(34, 211, 238, 0.25),
+    0 0 40px -20px rgba(167, 139, 250, 0.15);
+}
+
+@layer components {
+  /** Pills & icon buttons — neon back-glow on hover */
+  .neon-hover {
+    transition:
+      transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.28s ease,
+      filter 0.2s ease,
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+  }
+
+  .neon-hover:hover:not(:disabled) {
+    transform: scale(1.045);
+    filter: brightness(1.07);
+    box-shadow:
+      0 0 32px 2px rgba(34, 211, 238, 0.38),
+      0 0 52px -4px rgba(167, 139, 250, 0.35);
+  }
+
+  .neon-hover:disabled {
+    cursor: not-allowed;
+  }
+
+  /** Bordered tiles (metrics, simple cards) */
+  .neon-surface {
+    transition:
+      transform 0.22s ease,
+      box-shadow 0.28s ease,
+      border-color 0.2s ease;
+  }
+
+  .neon-surface:hover {
+    transform: scale(1.028);
+    border-color: rgba(34, 211, 238, 0.2);
+    box-shadow:
+      0 14px 42px -22px rgba(0, 0, 0, 0.5),
+      0 0 36px -12px rgba(34, 211, 238, 0.28),
+      0 0 48px -16px rgba(167, 139, 250, 0.22);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-panel:hover {
+    transform: none;
+  }
+
+  .glass-panel.glass-panel--static:hover {
+    transform: none;
+  }
+
+  .neon-hover:hover:not(:disabled),
+  .neon-surface:hover {
+    transform: none;
+    filter: none;
+    box-shadow: none;
+  }
 }
 
 .text-gradient {
@@ -72,4 +166,135 @@
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+}
+
+/** Animated gradient fill — text stays static; colors shift (respect reduced motion). */
+@keyframes text-gradient-flow {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.text-gradient-animated {
+  display: inline;
+  background-image: linear-gradient(
+    110deg,
+    #e0f2fe,
+    var(--accent),
+    #38bdf8,
+    var(--violet),
+    #67e8f9,
+    var(--accent),
+    #e0f2fe
+  );
+  background-size: 220% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: text-gradient-flow 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-gradient-animated {
+    animation: none;
+    background-image: linear-gradient(135deg, #e0f2fe 0%, var(--accent) 45%, var(--violet) 100%);
+    background-size: 100% auto;
+  }
+}
+
+/* Hero “What we ship” — slow-moving gradient frame */
+.hero-gradient-ring {
+  border-radius: 1rem;
+  padding: 1px;
+  background: linear-gradient(
+    125deg,
+    rgba(34, 211, 238, 0.65),
+    rgba(124, 58, 237, 0.45),
+    rgba(34, 211, 238, 0.35),
+    rgba(167, 139, 250, 0.55),
+    rgba(34, 211, 238, 0.65)
+  );
+  background-size: 280% 280%;
+  animation: hero-ring-flow 12s ease-in-out infinite;
+}
+
+@keyframes hero-ring-flow {
+  0%,
+  100% {
+    background-position: 0% 40%;
+  }
+  50% {
+    background-position: 100% 60%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-gradient-ring {
+    animation: none;
+    background-position: 50% 50%;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family:
+      var(--font-display),
+      var(--font-geist-sans),
+      ui-sans-serif,
+      system-ui,
+      sans-serif;
+  }
+}
+
+/* Flagship chat — streaming emphasis */
+@keyframes flagship-chat-ring {
+  0%,
+  100% {
+    box-shadow:
+      0 0 48px -12px var(--accent-glow),
+      0 0 0 1px rgba(34, 211, 238, 0.12);
+  }
+  50% {
+    box-shadow:
+      0 0 56px -8px rgba(34, 211, 238, 0.55),
+      0 0 0 1px rgba(34, 211, 238, 0.35);
+  }
+}
+
+.chat-flagship-streaming {
+  animation: flagship-chat-ring 2.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-flagship-streaming {
+    animation: none;
+  }
+}
+
+@keyframes chat-launcher-halo {
+  0%,
+  100% {
+    box-shadow:
+      0 0 40px -10px var(--accent-glow),
+      0 0 0 0 rgba(34, 211, 238, 0);
+  }
+  50% {
+    box-shadow:
+      0 0 48px -8px rgba(34, 211, 238, 0.55),
+      0 0 0 4px rgba(34, 211, 238, 0.12);
+  }
+}
+
+.chat-launcher-flagship:not(:hover) {
+  animation: chat-launcher-halo 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-launcher-flagship {
+    animation: none !important;
+  }
 }

@@ -1,9 +1,12 @@
+import { SectionEyebrow } from "@/components/ui/section-eyebrow";
+
 const logos = ["FinancialOS", "HealthScale", "CloudLedger", "LegalPilot", "DataMesh"];
 
 export function SocialProof() {
   return (
     <section className="border-y border-[var(--border-subtle)] bg-black/30 py-14">
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <SectionEyebrow centered>00 · Signal</SectionEyebrow>
         <p className="text-center text-xs font-semibold uppercase tracking-[0.25em] text-[var(--text-muted)]">
           Trusted patterns for regulated & high-stakes AI
         </p>
@@ -26,7 +29,7 @@ export function SocialProof() {
           ].map((item) => (
             <div
               key={item.label}
-              className="rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]/60 px-4 py-4 text-center"
+              className="neon-surface rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]/60 px-4 py-4 text-center"
             >
               <div className="font-mono text-2xl font-semibold text-[var(--accent)]">{item.value}</div>
               <div className="mt-1 text-xs text-[var(--text-muted)]">{item.label}</div>

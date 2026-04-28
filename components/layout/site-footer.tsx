@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_HREF } from "@/lib/contact";
+
 export function SiteFooter() {
   return (
     <footer className="border-t border-[var(--border-subtle)] bg-[var(--bg-elevated)]/80">
@@ -26,11 +28,28 @@ export function SiteFooter() {
             <FooterLink href="/services">Services</FooterLink>
             <FooterLink href="/links">Links</FooterLink>
             <FooterLink href="/#contact">Contact</FooterLink>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="text-[var(--text-muted)] transition hover:text-[var(--accent)]"
+            >
+              {CONTACT_EMAIL}
+            </a>
+            <a
+              href={CONTACT_PHONE_HREF}
+              className="text-[var(--text-muted)] transition hover:text-[var(--accent)]"
+            >
+              {CONTACT_PHONE_DISPLAY}
+            </a>
           </div>
         </div>
       </div>
-      <div className="border-t border-[var(--border-subtle)] py-6 text-center text-xs text-[var(--text-muted)]">
-        © {new Date().getFullYear()} NextEleven. Enterprise AI that actually works.
+      <div className="border-t border-[var(--border-subtle)] px-4 py-6 text-center">
+        <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[var(--text-muted)]">
+          Next.js · React · Sanity · Tailwind · AI SDK · xAI
+        </p>
+        <p className="mt-3 text-xs text-[var(--text-muted)]">
+          © {new Date().getFullYear()} NextEleven. Enterprise AI that actually works.
+        </p>
       </div>
     </footer>
   );

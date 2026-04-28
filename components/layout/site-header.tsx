@@ -3,7 +3,6 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 const nav = [
-  { href: "/#lines", label: "Offerings" },
   { href: "/#why", label: "Why us" },
   { href: "/products", label: "Products" },
   { href: "/portfolio", label: "Portfolio" },
@@ -39,7 +38,7 @@ export function SiteHeader() {
         <div className="flex items-center gap-2">
           <Link
             href="/#contact"
-            className="hidden rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-medium text-[var(--bg-deep)] shadow-[0_0_24px_var(--accent-glow)] transition hover:brightness-110 sm:inline-flex"
+            className="neon-hover hidden rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-medium text-[var(--bg-deep)] shadow-[0_0_24px_var(--accent-glow)] sm:inline-flex"
           >
             Contact
           </Link>
@@ -68,7 +67,7 @@ function MobileNav() {
         ))}
         <Link
           href="/#contact"
-          className="mt-1 block rounded-lg bg-[var(--accent)] px-3 py-2 text-center text-sm font-medium text-[var(--bg-deep)]"
+          className="neon-hover mt-1 block rounded-lg bg-[var(--accent)] px-3 py-2 text-center text-sm font-medium text-[var(--bg-deep)]"
         >
           Contact
         </Link>

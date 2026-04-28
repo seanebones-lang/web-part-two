@@ -9,7 +9,6 @@ import type {
 } from "@/lib/sanity-types";
 
 import { AnnouncementBanner } from "@/components/sections/announcement-banner";
-import { BusinessLines } from "@/components/sections/business-lines";
 import { CtaSection } from "@/components/sections/cta-section";
 import { Hero } from "@/components/sections/hero";
 import { ProductsSection } from "@/components/sections/products-section";
@@ -32,7 +31,6 @@ export default async function HomePage() {
       <AnnouncementBanner announcement={banner} />
       <Hero />
       <SocialProof />
-      <BusinessLines />
       <WhyNextEleven />
       <UseCases />
       <ProductsSection products={products} />
