@@ -37,26 +37,37 @@ export const nextElevenChatTools = {
     description:
       "Return the canonical flagship capability list for this assistant (streaming, tools, multimodal). Use when the user asks for flagship features, what this chat can do, or how it was built.",
     inputSchema: z.object({
-      audience: z.enum(["executive", "engineer"]).optional(),
+      /** Keep permissive to avoid tool-call validation failures from minor model drift. */
+      audience: z.string().optional(),
     }),
-    execute: async ({ audience }) => ({
-      audience: audience ?? "engineer",
+    execute: async ({ audience }) => {
+      const normalized =
+        typeof audience === "string" &&
+        audience.trim().toLowerCase().startsWith("exec")
+          ? "executive"
+          : "engineer";
+
+      return {
+      audience: normalized,
       capabilities: [
-        "UIMessage stream via AI SDK · OpenAI-compatible xAI Grok endpoint",
-        "Multi-step tools: contact, site links, capability catalog, optional Serper web search with numbered refs [1], [2] for citations",
-        "PDF text extraction + vision images + xAI TTS/STT (proxied API routes)",
-        "Markdown + GFM + syntax-highlighted code blocks",
-        "Optional local WebSocket proxy for xAI realtime voice (see voice proxy script)",
-        "Stop / regenerate / persist / export transcripts client-side",
+        "Streaming chat over UIMessage protocol (AI SDK) with OpenAI-compatible xAI Grok model routing",
+        "Server-side multi-step tools: contact info, site links, flagship capability catalog, optional Serper web search",
+        "Web-search citation workflow: numbered refs [1], [2] with clickable links in rendered assistant markdown",
+        "Multimodal input: image attachments for vision + PDF upload extraction merged into prompt context",
+        "Voice stack: xAI TTS playback + microphone STT via secure server API routes",
+        "Realtime voice option: local WebSocket proxy bridge to xAI Realtime API for live event-driven sessions",
+        "Message UX polish: stop, regenerate, grounded-tool indicators, copy reply, and keyboard shortcuts",
+        "Persistence & export: local thread history, voice preference memory, markdown/json export, full transcript copy",
       ],
-    }),
+    };
+    },
   }),
 
   getSiteLinks: tool({
     description:
       "Return canonical URLs on this site for portfolio, services, products, or contact.",
     inputSchema: z.object({
-      intent: z.enum(["portfolio", "services", "products", "contact", "all"]).optional(),
+      intent: z.string().optional(),
     }),
     execute: async ({ intent }) => {
       const links = [
@@ -81,7 +92,15 @@ export const nextElevenChatTools = {
           hint: "Email & phone",
         },
       ];
-      const key = intent ?? "all";
+      const raw = typeof intent === "string" ? intent.trim().toLowerCase() : "";
+      const key =
+        raw === "portfolio" ||
+        raw === "services" ||
+        raw === "products" ||
+        raw === "contact" ||
+        raw === "all"
+          ? raw
+          : "all";
       if (key === "all") return { links };
       const match: Record<string, string> = {
         portfolio: "/portfolio",

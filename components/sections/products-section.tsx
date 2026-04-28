@@ -53,6 +53,9 @@ export function ProductsSection({
         <p className="mt-4 text-[var(--text-muted)]">
           Product and module listings — copy and CTAs are edited in Sanity.
         </p>
+        <p className="mt-3 text-sm text-[var(--text-muted)]">
+          Includes flagship conversational surfaces, RAG modules, and integration-ready building blocks.
+        </p>
         </div>
       ) : null}
 

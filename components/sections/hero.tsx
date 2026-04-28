@@ -60,6 +60,15 @@ export function Hero() {
             product patterns, mobile apps for iOS and Android, integrations, and everything around making
             intelligent products real in production.
           </motion.p>
+          <motion.p
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55, delay: 0.16 }}
+            className="mt-4 max-w-xl text-sm leading-relaxed text-[var(--text-muted)]"
+          >
+            We also build dedicated chat systems and bots trained on your business data, and production RAG
+            implementations that stay grounded in live operational context.
+          </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
@@ -126,6 +135,11 @@ export function Hero() {
               <li className="flex gap-3">
                 <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-sky-400 shadow-[0_0_10px_rgba(56,189,248,0.8)]" />
                 RAG, grounding, and evaluation when model behavior has to hold up in production.
+              </li>
+              <li className="flex gap-3">
+                <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(74,222,128,0.8)]" />
+                Real implementations include inventory intelligence, routing automation, and mobile-enabled
+                customer workflows.
               </li>
             </ul>
           </div>

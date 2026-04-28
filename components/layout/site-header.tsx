@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 import { cn } from "@/lib/utils";
 
@@ -16,8 +17,15 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-[var(--border-subtle)] bg-[var(--bg-deep)]/75 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link href="/" className="group flex items-center gap-2 font-semibold tracking-tight">
-          <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--accent-dim)] ring-1 ring-[var(--accent)]/30 transition group-hover:ring-[var(--accent)]/60">
-            <span className="text-sm font-bold text-[var(--accent)]">11</span>
+          <span className="inline-flex h-8 w-8 items-center justify-center overflow-hidden">
+            <Image
+              src="/newlogo.png"
+              alt="NextEleven logo"
+              width={32}
+              height={32}
+              className="h-full w-full object-contain"
+              priority
+            />
           </span>
           <span className="text-[var(--text-primary)]">NextEleven</span>
         </Link>

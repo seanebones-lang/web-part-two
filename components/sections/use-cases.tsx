@@ -34,6 +34,10 @@ export function UseCases() {
         <p className="mt-4 max-w-2xl text-[var(--text-muted)]">
           Four repeatable vertical patterns — each tuned for audit trails, grounded retrieval, and deployment realism.
         </p>
+        <p className="mt-3 max-w-3xl text-sm text-[var(--text-muted)]">
+          Recent example: a dealership network deployment combining RAG and graph workflows for intelligent
+          email triage, cross-location inventory visibility, and proactive low-stock alerts.
+        </p>
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           {stories.map((s) => (

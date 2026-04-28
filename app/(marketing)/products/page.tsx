@@ -24,6 +24,10 @@ export default async function ProductsPage() {
         <p className="mt-4 max-w-2xl text-[var(--text-muted)]">
           Offerings designed to complement custom programs — extend descriptions and CTAs from Sanity.
         </p>
+        <p className="mt-3 max-w-3xl text-sm text-[var(--text-muted)]">
+          Flagship focus: production-grade chat systems and RAG-backed assistants that integrate with your
+          existing web, mobile, and internal software surfaces.
+        </p>
       </div>
       <ProductsSection products={products} showIntro={false} />
     </div>

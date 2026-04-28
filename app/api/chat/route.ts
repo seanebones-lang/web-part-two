@@ -1,4 +1,4 @@
-import { createOpenAI } from "@ai-sdk/openai";
+import { createXai } from "@ai-sdk/xai";
 import {
   convertToModelMessages,
   stepCountIs,
@@ -12,13 +12,12 @@ import { nextElevenChatTools } from "@/lib/chat-tools";
 
 export const maxDuration = 120;
 
-const xai = createOpenAI({
-  baseURL: "https://api.x.ai/v1",
+const xai = createXai({
   apiKey: process.env.XAI_API_KEY ?? "",
 });
 
 function resolveModelId(raw: unknown): string {
-  const fallback = process.env.XAI_MODEL ?? "grok-2-latest";
+  const fallback = process.env.XAI_MODEL ?? "grok-4";
   if (typeof raw !== "string") return fallback;
   const t = raw.trim();
   if (/^grok-[a-z0-9._-]+$/i.test(t)) return t;
@@ -29,7 +28,7 @@ function pickModel(messages: UIMessage[], bodyModel: unknown): string {
   const hasImage = messagesContainImageParts(messages);
   if (hasImage) {
     const visionDefault =
-      process.env.XAI_VISION_MODEL ?? process.env.XAI_MODEL ?? "grok-2-latest";
+      process.env.XAI_VISION_MODEL ?? process.env.XAI_MODEL ?? "grok-4";
     return resolveModelId(visionDefault);
   }
   return resolveModelId(bodyModel);

@@ -7,11 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "voice-proxy": "node scripts/xai-voice-proxy.mjs"
+    "voice-proxy": "node scripts/xai-voice-proxy.mjs",
+    "smoke:chat:local": "CHAT_BASE_URL=http://127.0.0.1:3000 node scripts/chat-smoke.mjs",
+    "smoke:chat:prod": "CHAT_BASE_URL=https://web-part-two.vercel.app node scripts/chat-smoke.mjs"
   },
   "dependencies": {
     "@ai-sdk/openai": "^3.0.53",
     "@ai-sdk/react": "^3.0.170",
+    "@ai-sdk/xai": "^3.0.83",
     "@portabletext/react": "^6.0.3",
     "@sanity/image-url": "^2.1.1",
     "@sanity/vision": "^5.22.0",

@@ -3,6 +3,10 @@
 import { useChat } from "@ai-sdk/react";
 import {
   Check,
+  ChevronDown,
+  ChevronFirst,
+  ChevronLast,
+  ChevronUp,
   Copy,
   Crown,
   Headphones,
@@ -151,8 +155,13 @@ export function ChatWidget() {
   const [pdfParts, setPdfParts] = useState<PdfPart[]>([]);
   const [dragOver, setDragOver] = useState(false);
   const [voiceDrawerOpen, setVoiceDrawerOpen] = useState(false);
+  const [headerCollapsed, setHeaderCollapsed] = useState(false);
+  const [autoFollowEnabled, setAutoFollowEnabled] = useState(true);
 
   const scrollRef = useRef<HTMLDivElement>(null);
+  /** Keeps auto-follow disabled when user scrolls up to read prior output. */
+  const shouldAutoScrollRef = useRef(true);
+  const lastScrollTopRef = useRef(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audioUrlRef = useRef<string | null>(null);
@@ -187,6 +196,16 @@ export function ChatWidget() {
 
   const pending = status === "submitted" || status === "streaming";
   const pdfBusy = pdfParts.some((p) => p.status === "extracting");
+
+  const setAutoFollow = useCallback((next: boolean) => {
+    shouldAutoScrollRef.current = next;
+    setAutoFollowEnabled((prev) => (prev === next ? prev : next));
+  }, []);
+
+  function isNearBottom(el: HTMLDivElement, threshold = 72) {
+    const remaining = el.scrollHeight - el.scrollTop - el.clientHeight;
+    return remaining <= threshold;
+  }
 
   async function ingestPdfFile(file: File) {
     const activeCount = pdfParts.filter((p) => p.status !== "error").length;
@@ -303,9 +322,13 @@ export function ChatWidget() {
   }, [setMessages]);
 
   useEffect(() => {
-    scrollRef.current?.scrollTo({
-      top: scrollRef.current.scrollHeight,
-      behavior: "smooth",
+    const el = scrollRef.current;
+    if (!el) return;
+    if (!shouldAutoScrollRef.current) return;
+    el.scrollTo({
+      top: el.scrollHeight,
+      // Avoid smooth scrolling while tokens stream; it can fight manual reading.
+      behavior: pending ? "auto" : "smooth",
     });
   }, [messages, pending, voiceStatus]);
 
@@ -516,6 +539,7 @@ export function ChatWidget() {
 
     clearError();
     setTtsError(null);
+    setAutoFollow(true);
 
     const dt = new DataTransfer();
     attachments.forEach((a) => dt.items.add(a.file));
@@ -601,6 +625,23 @@ export function ChatWidget() {
     setTtsError(null);
   }
 
+  function scrollTranscriptByViewport(direction: "up" | "down") {
+    const el = scrollRef.current;
+    if (!el) return;
+    const delta = Math.max(180, Math.floor(el.clientHeight * 0.72));
+    const nextTop = direction === "up" ? el.scrollTop - delta : el.scrollTop + delta;
+    el.scrollTo({ top: nextTop, behavior: "smooth" });
+    if (direction === "down" && isNearBottom(el, 90)) setAutoFollow(true);
+    if (direction === "up") setAutoFollow(false);
+  }
+
+  function scrollTranscriptToTop() {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollTo({ top: 0, behavior: "smooth" });
+    setAutoFollow(false);
+  }
+
   const panelHeight = expanded
     ? "h-[min(92vh,calc(100dvh-3rem))]"
     : "h-[min(560px,calc(100vh-6rem))]";
@@ -664,7 +705,12 @@ export function ChatWidget() {
               pending && "chat-flagship-streaming",
             )}
           >
-            <div className="flex flex-col gap-2 border-b border-[var(--border-subtle)] px-4 py-3">
+            <div
+              className={cn(
+                "border-b border-[var(--border-subtle)] px-4",
+                headerCollapsed ? "py-2" : "flex flex-col gap-2 py-3",
+              )}
+            >
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
                   <p className="flex flex-wrap items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
@@ -677,6 +723,20 @@ export function ChatWidget() {
                   </p>
                 </div>
                 <div className="flex shrink-0 flex-wrap items-center justify-end gap-1">
+                  <button
+                    type="button"
+                    onClick={() => setHeaderCollapsed((v) => !v)}
+                    title={headerCollapsed ? "Expand header" : "Collapse header"}
+                    className="neon-hover rounded-lg p-2 text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-primary)]"
+                    aria-label={headerCollapsed ? "Expand chat header" : "Collapse chat header"}
+                    aria-pressed={headerCollapsed}
+                  >
+                    {headerCollapsed ? (
+                      <ChevronDown className="h-4 w-4" />
+                    ) : (
+                      <ChevronUp className="h-4 w-4" />
+                    )}
+                  </button>
                   <button
                     type="button"
                     onClick={() => setExpanded((v) => !v)}
@@ -760,7 +820,8 @@ export function ChatWidget() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2 text-[10px] text-[var(--text-muted)]">
+              {!headerCollapsed ? (
+                <div className="flex flex-wrap items-center gap-2 text-[10px] text-[var(--text-muted)]">
                 <label className="flex min-w-0 flex-1 flex-wrap items-center gap-2">
                   <span className="shrink-0 font-medium uppercase tracking-wider">TTS voice</span>
                   <select
@@ -790,13 +851,27 @@ export function ChatWidget() {
                     Regenerate
                   </button>
                 ) : null}
-              </div>
+                </div>
+              ) : null}
             </div>
 
-            <div className="flex flex-1 flex-col gap-2 overflow-hidden">
+            <div className="relative flex flex-1 flex-col gap-2 overflow-hidden">
               <div
                 ref={scrollRef}
-                className="flex-1 space-y-3 overflow-y-auto px-4 py-4 text-sm"
+                onScroll={(e) => {
+                  const el = e.currentTarget;
+                  const scrollingUp = el.scrollTop < lastScrollTopRef.current;
+                  lastScrollTopRef.current = el.scrollTop;
+
+                  if (scrollingUp) {
+                    setAutoFollow(false);
+                    return;
+                  }
+
+                  // Re-enable auto-follow only when user intentionally returns near bottom.
+                  setAutoFollow(isNearBottom(el));
+                }}
+                className="chat-scrollbar flex-1 space-y-3 overflow-y-scroll px-4 py-4 text-sm"
               >
                 {messages.length === 0 ? (
                   <div className="flex flex-col items-center justify-center gap-4 px-2 py-10 text-center">
@@ -808,6 +883,7 @@ export function ChatWidget() {
                       onClick={() => {
                         clearError();
                         setTtsError(null);
+                        setAutoFollow(true);
                         void sendMessage({ text: FLAGSHIP_FEATURES_REQUEST });
                       }}
                       disabled={pending}
@@ -937,6 +1013,7 @@ export function ChatWidget() {
                           onClick={() => {
                             clearError();
                             setTtsError(null);
+                            setAutoFollow(true);
                             void sendMessage({ text: q });
                           }}
                           className="rounded-full border border-[var(--border-subtle)] bg-black/25 px-3 py-1.5 text-left text-[11px] leading-snug text-[var(--text-muted)] transition hover:border-[var(--accent)]/45 hover:text-[var(--text-primary)]"
@@ -947,7 +1024,72 @@ export function ChatWidget() {
                     </div>
                   </div>
                 ) : null}
+
+                {!autoFollowEnabled && messages.length > 0 ? (
+                  <div className="sticky bottom-2 z-20 flex justify-end pr-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const el = scrollRef.current;
+                        if (!el) return;
+                        el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+                        setAutoFollow(true);
+                      }}
+                      className="rounded-full border border-[var(--accent)]/50 bg-[var(--bg-card)]/95 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--accent)] shadow-[0_0_24px_-8px_var(--accent-glow)]"
+                    >
+                      Jump to latest
+                    </button>
+                  </div>
+                ) : null}
               </div>
+
+              {messages.length > 0 ? (
+                <div className="pointer-events-none absolute right-2 top-1/2 z-30 -translate-y-1/2">
+                  <div className="pointer-events-auto flex flex-col gap-1 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]/90 p-1 shadow-lg backdrop-blur">
+                    <button
+                      type="button"
+                      onClick={scrollTranscriptToTop}
+                      className="rounded-md p-1.5 text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-primary)]"
+                      title="Jump to top"
+                      aria-label="Jump to top"
+                    >
+                      <ChevronFirst className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollTranscriptByViewport("up")}
+                      className="rounded-md p-1.5 text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-primary)]"
+                      title="Scroll up"
+                      aria-label="Scroll up"
+                    >
+                      <ChevronUp className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => scrollTranscriptByViewport("down")}
+                      className="rounded-md p-1.5 text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-primary)]"
+                      title="Scroll down"
+                      aria-label="Scroll down"
+                    >
+                      <ChevronDown className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const el = scrollRef.current;
+                        if (!el) return;
+                        el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
+                        setAutoFollow(true);
+                      }}
+                      className="rounded-md p-1.5 text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--accent)]"
+                      title="Jump to latest"
+                      aria-label="Jump to latest"
+                    >
+                      <ChevronLast className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+              ) : null}
 
               {error ? (
                 <p className="px-4 text-xs text-rose-400" role="alert">
@@ -1123,7 +1265,7 @@ export function ChatWidget() {
                   </div>
                 </div>
                 <p className="mt-2 text-[10px] leading-snug text-[var(--text-muted)]">
-                  Attach files · Voice · Esc closes
+                  Flagship chat · tools + RAG + voice · attach files · Esc closes
                 </p>
               </form>
             </div>

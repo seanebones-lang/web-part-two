@@ -85,6 +85,63 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
+
+      <section id="rag-solutions" className="scroll-mt-28 mt-16 border-t border-[var(--border-subtle)] pt-12">
+        <h2 className="text-2xl font-semibold text-[var(--text-primary)]">RAG solutions in practice</h2>
+        <p className="mt-4 text-[var(--text-muted)]">
+          Our RAG systems combine retrieval with generation so outputs stay grounded in your live business
+          data, documents, and operational context.
+        </p>
+        <div className="mt-6 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)]/40 p-6">
+          <h3 className="text-lg font-semibold text-[var(--text-primary)]">
+            Featured implementation: dealership intelligence system
+          </h3>
+          <ul className="mt-4 space-y-3 text-[var(--text-muted)]">
+            <li>
+              <strong className="text-[var(--text-primary)]">Intelligent email routing:</strong> incoming
+              customer emails are triaged by urgency and routine inquiries are answered automatically.
+            </li>
+            <li>
+              <strong className="text-[var(--text-primary)]">Multi-location graph inventory:</strong>{" "}
+              vehicle stock is tracked across 7 dealership locations with near real-time visibility.
+            </li>
+            <li>
+              <strong className="text-[var(--text-primary)]">Proactive stock alerts:</strong> management is
+              notified early when inventory trends low to reduce missed sales.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="chat-systems" className="scroll-mt-28 mt-16 border-t border-[var(--border-subtle)] pt-12">
+        <h2 className="text-2xl font-semibold text-[var(--text-primary)]">Chat systems & bots</h2>
+        <p className="mt-4 text-[var(--text-muted)]">
+          We build custom conversational systems trained on your documentation, policies, and product data
+          — from customer support to internal workflow automation.
+        </p>
+        <ul className="mt-6 space-y-3 text-[var(--text-muted)]">
+          <li>
+            <strong className="text-[var(--text-primary)]">Deployment surfaces:</strong> website widgets,
+            mobile apps, and team workflows across channels.
+          </li>
+          <li>
+            <strong className="text-[var(--text-primary)]">Business logic:</strong> escalation paths, human
+            handoff, and domain-specific response behavior tuned to your operation.
+          </li>
+          <li>
+            <strong className="text-[var(--text-primary)]">Measurement:</strong> response quality, latency,
+            and conversion/support outcomes with iterative tuning.
+          </li>
+        </ul>
+      </section>
+
+      <section id="mobile-details" className="scroll-mt-28 mt-16 border-t border-[var(--border-subtle)] pt-12">
+        <h2 className="text-2xl font-semibold text-[var(--text-primary)]">iOS & Android delivery details</h2>
+        <p className="mt-4 text-[var(--text-muted)]">
+          We support native and cross-platform paths (Swift/SwiftUI, Kotlin/Compose, React Native, and
+          Flutter) with full backend integration and release pipeline support.
+        </p>
+      </section>
     </article>
   );
 }
