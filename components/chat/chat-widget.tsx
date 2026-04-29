@@ -920,6 +920,7 @@ export function ChatWidget({ onOpenChange }: { onOpenChange?: (open: boolean) =>
 
                   if (nearBottom) setAutoFollow(true);
                 }}
+                data-lenis-prevent
                 className="chat-scrollbar flex-1 space-y-3 overflow-y-auto px-4 py-4 text-sm"
               >
                 {messages.length === 0 ? (
