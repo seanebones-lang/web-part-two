@@ -20,18 +20,17 @@ export default async function PortfolioPage() {
         Portfolio
       </h1>
       <p className="mt-4 max-w-2xl text-[var(--text-muted)]">
-        Case studies grounded in retrieval orchestration, governance, and deployment realism —
-        populate via Sanity for editorial workflows.
+        Case studies grounded in retrieval orchestration, governance, and deployment realism.
       </p>
 
       <div className="mt-12 grid gap-6 md:grid-cols-2">
         {items.length === 0 ? (
           <div className="glass-panel rounded-xl p-10 text-[var(--text-muted)] md:col-span-2">
-            No portfolio entries yet — publish{" "}
+            No portfolio entries yet — add your first{" "}
             <Link href="/studio" className="text-[var(--accent)] hover:underline">
               Portfolio
             </Link>{" "}
-            documents in Sanity.
+            entry.
           </div>
         ) : (
           items.map((item) => (
@@ -60,6 +59,9 @@ export default async function PortfolioPage() {
                 <p className="mt-4 line-clamp-4 text-sm leading-relaxed text-[var(--text-muted)]">
                   {item.summary}
                 </p>
+              ) : null}
+              {item.liveUrl ? (
+                <span className="mt-4 text-xs text-[var(--text-muted)]">Live: {item.liveUrl}</span>
               ) : null}
               <span className="mt-6 text-sm font-medium text-[var(--accent)]">Read story →</span>
             </Link>

@@ -17,9 +17,9 @@ const FALLBACK: SanityProduct[] = [
     _id: "placeholder-a",
     name: "Example offering A",
     slug: { current: "example-offering-a" },
-    tagline: "Publish real products in Sanity Studio",
+    tagline: "Launch your first product card",
     description:
-      "Placeholder card — add Product documents in Sanity to replace this tile.",
+      "Placeholder card — add your real product content to replace this tile.",
     cta: "Contact",
   },
   {
@@ -51,7 +51,7 @@ export function ProductsSection({
             Products that ship beside custom builds
           </h2>
         <p className="mt-4 text-[var(--text-muted)]">
-          Product and module listings — copy and CTAs are edited in Sanity.
+          Product and module listings for offerings that ship beside custom builds.
         </p>
         <p className="mt-3 text-sm text-[var(--text-muted)]">
           Includes flagship conversational surfaces, RAG modules, and integration-ready building blocks.

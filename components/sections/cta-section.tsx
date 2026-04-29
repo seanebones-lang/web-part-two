@@ -39,7 +39,7 @@ export function CtaSection() {
                 href="/studio"
                 className="neon-hover inline-flex rounded-full border border-[var(--border-subtle)] px-8 py-3 text-sm font-medium text-[var(--text-primary)] hover:bg-white/5"
               >
-                Open Sanity Studio
+                Open Content Studio
               </Link>
             </div>
           </div>

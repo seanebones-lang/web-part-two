@@ -9,7 +9,7 @@ import { ProductsSection } from "@/components/sections/products-section";
 export const metadata: Metadata = {
   title: "Products",
   description:
-    "Platforms and modules we ship alongside custom builds — titles and copy are managed in Sanity.",
+    "Platforms and modules we ship alongside custom builds.",
 };
 
 export default async function ProductsPage() {
@@ -22,7 +22,7 @@ export default async function ProductsPage() {
           Products
         </h1>
         <p className="mt-4 max-w-2xl text-[var(--text-muted)]">
-          Offerings designed to complement custom programs — extend descriptions and CTAs from Sanity.
+          Offerings designed to complement custom programs with clear value and outcomes.
         </p>
         <p className="mt-3 max-w-3xl text-sm text-[var(--text-muted)]">
           Flagship focus: production-grade chat systems and RAG-backed assistants that integrate with your

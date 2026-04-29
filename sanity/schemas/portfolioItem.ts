@@ -57,6 +57,7 @@ export default defineType({
       type: "string",
       options: {
         list: [
+          { title: "Websites", value: "websites" },
           { title: "Finance", value: "finance" },
           { title: "Healthcare", value: "healthcare" },
           { title: "SaaS", value: "saas" },
@@ -65,6 +66,16 @@ export default defineType({
         ],
       },
       initialValue: "other",
+    }),
+    defineField({
+      name: "liveUrl",
+      title: "Live product/site URL",
+      type: "url",
+      validation: (Rule) =>
+        Rule.uri({
+          scheme: ["http", "https"],
+        }),
+      description: "Optional: public link to the live product, app, or website.",
     }),
     defineField({
       name: "featured",

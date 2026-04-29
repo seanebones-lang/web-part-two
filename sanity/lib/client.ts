@@ -26,6 +26,10 @@ export async function sanityFetch<T>(
     return null;
   }
   return client.fetch<T>(query, params ?? {}, {
-    next: { tags: tags?.length ? tags : ["sanity"] },
+    next: {
+      tags: tags?.length ? tags : ["sanity"],
+      // Fallback freshness if webhook is delayed/misconfigured.
+      revalidate: 30,
+    },
   });
 }

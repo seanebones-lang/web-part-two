@@ -108,7 +108,7 @@ export function VoiceRealtimeDrawer({
   }, [open, push, wsUrl]);
 
   useEffect(() => {
-    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "auto" });
   }, [lines]);
 
   function sendProbe() {

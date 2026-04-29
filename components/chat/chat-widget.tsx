@@ -16,6 +16,7 @@ import {
   MessageCircle,
   Mic,
   MicOff,
+  MoreHorizontal,
   Paperclip,
   RefreshCw,
   Send,
@@ -74,6 +75,8 @@ const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 const MAX_IMAGE_FILES = 6;
 const MAX_PDF_FILES = 3;
 const MAX_PDF_BYTES = 18 * 1024 * 1024;
+const AUTO_FOLLOW_UNLOCK_PX = 96;
+const AUTO_SCROLL_GUARD_PX = 120;
 
 type PdfPart = {
   id: string;
@@ -138,7 +141,7 @@ function friendlyChatError(message: string): string {
   return m;
 }
 
-export function ChatWidget() {
+export function ChatWidget({ onOpenChange }: { onOpenChange?: (open: boolean) => void } = {}) {
   const [open, setOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
@@ -156,6 +159,7 @@ export function ChatWidget() {
   const [dragOver, setDragOver] = useState(false);
   const [voiceDrawerOpen, setVoiceDrawerOpen] = useState(false);
   const [headerCollapsed, setHeaderCollapsed] = useState(false);
+  const [toolsMenuOpen, setToolsMenuOpen] = useState(false);
   const [autoFollowEnabled, setAutoFollowEnabled] = useState(true);
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -163,6 +167,7 @@ export function ChatWidget() {
   const shouldAutoScrollRef = useRef(true);
   const lastScrollTopRef = useRef(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const toolsMenuRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audioUrlRef = useRef<string | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -196,6 +201,10 @@ export function ChatWidget() {
 
   const pending = status === "submitted" || status === "streaming";
   const pdfBusy = pdfParts.some((p) => p.status === "extracting");
+
+  useEffect(() => {
+    onOpenChange?.(open);
+  }, [onOpenChange, open]);
 
   const setAutoFollow = useCallback((next: boolean) => {
     shouldAutoScrollRef.current = next;
@@ -325,12 +334,13 @@ export function ChatWidget() {
     const el = scrollRef.current;
     if (!el) return;
     if (!shouldAutoScrollRef.current) return;
+    if (!isNearBottom(el, 120)) return;
     el.scrollTo({
       top: el.scrollHeight,
-      // Avoid smooth scrolling while tokens stream; it can fight manual reading.
-      behavior: pending ? "auto" : "smooth",
+      // Keep this instant for smoother continuous stream updates.
+      behavior: "auto",
     });
-  }, [messages, pending, voiceStatus]);
+  }, [messages, pending]);
 
   useEffect(() => {
     return () => {
@@ -344,13 +354,23 @@ export function ChatWidget() {
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key !== "Escape") return;
-      if (voiceDrawerOpen) setVoiceDrawerOpen(false);
+      if (toolsMenuOpen) setToolsMenuOpen(false);
+      else if (voiceDrawerOpen) setVoiceDrawerOpen(false);
       else if (shortcutsOpen) setShortcutsOpen(false);
       else if (open) setOpen(false);
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, shortcutsOpen, voiceDrawerOpen]);
+  }, [open, shortcutsOpen, toolsMenuOpen, voiceDrawerOpen]);
+
+  useEffect(() => {
+    if (!toolsMenuOpen) return;
+    function onPointerDown(e: MouseEvent) {
+      if (!toolsMenuRef.current?.contains(e.target as Node)) setToolsMenuOpen(false);
+    }
+    window.addEventListener("mousedown", onPointerDown);
+    return () => window.removeEventListener("mousedown", onPointerDown);
+  }, [toolsMenuOpen]);
 
   const stopPlayback = useCallback(() => {
     audioRef.current?.pause();
@@ -630,7 +650,7 @@ export function ChatWidget() {
     if (!el) return;
     const delta = Math.max(180, Math.floor(el.clientHeight * 0.72));
     const nextTop = direction === "up" ? el.scrollTop - delta : el.scrollTop + delta;
-    el.scrollTo({ top: nextTop, behavior: "smooth" });
+    el.scrollTo({ top: nextTop, behavior: pending ? "auto" : "smooth" });
     if (direction === "down" && isNearBottom(el, 90)) setAutoFollow(true);
     if (direction === "up") setAutoFollow(false);
   }
@@ -640,6 +660,13 @@ export function ChatWidget() {
     if (!el) return;
     el.scrollTo({ top: 0, behavior: "smooth" });
     setAutoFollow(false);
+  }
+
+  function jumpToLatest() {
+    const el = scrollRef.current;
+    if (!el) return;
+    el.scrollTo({ top: el.scrollHeight, behavior: pending ? "auto" : "smooth" });
+    setAutoFollow(true);
   }
 
   const panelHeight = expanded
@@ -708,7 +735,7 @@ export function ChatWidget() {
             <div
               className={cn(
                 "border-b border-[var(--border-subtle)] px-4",
-                headerCollapsed ? "py-2" : "flex flex-col gap-2 py-3",
+                headerCollapsed ? "py-2" : "flex flex-col gap-1.5 py-2.5",
               )}
             >
               <div className="flex items-start justify-between gap-2">
@@ -716,13 +743,13 @@ export function ChatWidget() {
                   <p className="flex flex-wrap items-center gap-2 text-sm font-semibold text-[var(--text-primary)]">
                     <Sparkles className="h-4 w-4 shrink-0 text-[var(--accent)]" aria-hidden />
                     NextEleven Assistant
-                    <span className="inline-flex items-center gap-1 rounded-full border border-[var(--accent)]/35 bg-[var(--accent)]/10 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.15em] text-[var(--accent)]">
+                    <span className="inline-flex items-center gap-1 rounded-full border border-[var(--accent)]/30 bg-[var(--accent)]/[0.12] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-[var(--accent)]">
                       <Crown className="h-3 w-3" aria-hidden />
                       Flagship
                     </span>
                   </p>
                 </div>
-                <div className="flex shrink-0 flex-wrap items-center justify-end gap-1">
+                <div className="flex shrink-0 items-center justify-end gap-1">
                   <button
                     type="button"
                     onClick={() => setHeaderCollapsed((v) => !v)}
@@ -748,20 +775,9 @@ export function ChatWidget() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => setShortcutsOpen((v) => !v)}
-                    title="Shortcuts"
-                    className="neon-hover rounded-lg p-2 text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-primary)]"
-                    aria-label="Keyboard shortcuts"
-                  >
-                    <Keyboard className="h-4 w-4" />
-                  </button>
-                  <button
-                    type="button"
                     onClick={() => setVoiceDrawerOpen((v) => !v)}
                     title="Realtime voice (local proxy)"
-                    className={`neon-hover rounded-lg p-2 hover:bg-white/10 hover:text-[var(--text-primary)] ${
-                      voiceDrawerOpen ? "text-[var(--accent)]" : "text-[var(--text-muted)]"
-                    }`}
+                    className="neon-hover rounded-lg p-2 text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-primary)]"
                     aria-label="Realtime voice proxy"
                     aria-pressed={voiceDrawerOpen}
                   >
@@ -781,37 +797,81 @@ export function ChatWidget() {
                       <Copy className="h-4 w-4" />
                     )}
                   </button>
+                  <div className="relative" ref={toolsMenuRef}>
+                    <button
+                      type="button"
+                      onClick={() => setToolsMenuOpen((v) => !v)}
+                      title="More actions"
+                      className="neon-hover rounded-lg p-2 text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-primary)]"
+                      aria-label="More actions"
+                      aria-expanded={toolsMenuOpen}
+                      aria-haspopup="menu"
+                    >
+                      <MoreHorizontal className="h-4 w-4" />
+                    </button>
+                    {toolsMenuOpen ? (
+                      <div
+                        className="absolute right-0 top-[calc(100%+0.35rem)] z-40 min-w-44 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]/95 p-1.5 shadow-xl"
+                        role="menu"
+                      >
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setShortcutsOpen((v) => !v);
+                            setToolsMenuOpen(false);
+                          }}
+                          className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-xs text-[var(--text-primary)] hover:bg-white/10"
+                          role="menuitem"
+                        >
+                          <Keyboard className="h-3.5 w-3.5 text-[var(--text-muted)]" />
+                          Keyboard shortcuts
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            exportMarkdownFile();
+                            setToolsMenuOpen(false);
+                          }}
+                          disabled={!messages.length}
+                          className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-xs text-[var(--text-primary)] hover:bg-white/10 disabled:opacity-40"
+                          role="menuitem"
+                        >
+                          Download .md
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            exportJsonFile();
+                            setToolsMenuOpen(false);
+                          }}
+                          disabled={!messages.length}
+                          className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-xs text-[var(--text-primary)] hover:bg-white/10 disabled:opacity-40"
+                          role="menuitem"
+                        >
+                          Download .json
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            clearConversation();
+                            setToolsMenuOpen(false);
+                          }}
+                          disabled={!messages.length || pending}
+                          className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 text-left text-xs text-rose-200 hover:bg-rose-400/20 disabled:opacity-40"
+                          role="menuitem"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                          Clear conversation
+                        </button>
+                      </div>
+                    ) : null}
+                  </div>
                   <button
                     type="button"
-                    onClick={exportMarkdownFile}
-                    disabled={!messages.length}
-                    title="Download Markdown"
-                    className="neon-hover rounded-lg px-2 py-1 text-[10px] font-medium text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-primary)] disabled:opacity-30"
-                  >
-                    .md
-                  </button>
-                  <button
-                    type="button"
-                    onClick={exportJsonFile}
-                    disabled={!messages.length}
-                    title="Download JSON (UIMessage)"
-                    className="neon-hover rounded-lg px-2 py-1 text-[10px] font-medium text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-primary)] disabled:opacity-30"
-                  >
-                    .json
-                  </button>
-                  <button
-                    type="button"
-                    onClick={clearConversation}
-                    disabled={!messages.length || pending}
-                    title="Clear conversation"
-                    className="neon-hover rounded-lg p-2 text-[var(--text-muted)] hover:bg-rose-400/20 hover:text-rose-200 disabled:opacity-30"
-                    aria-label="Clear conversation"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setOpen(false)}
+                    onClick={() => {
+                      setToolsMenuOpen(false);
+                      setOpen(false);
+                    }}
                     className="neon-hover rounded-lg p-2 text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-primary)]"
                     aria-label="Close chat"
                   >
@@ -862,16 +922,16 @@ export function ChatWidget() {
                   const el = e.currentTarget;
                   const scrollingUp = el.scrollTop < lastScrollTopRef.current;
                   lastScrollTopRef.current = el.scrollTop;
+                  const nearBottom = isNearBottom(el, pending ? AUTO_SCROLL_GUARD_PX : AUTO_FOLLOW_UNLOCK_PX);
 
                   if (scrollingUp) {
                     setAutoFollow(false);
                     return;
                   }
 
-                  // Re-enable auto-follow only when user intentionally returns near bottom.
-                  setAutoFollow(isNearBottom(el));
+                  if (nearBottom) setAutoFollow(true);
                 }}
-                className="chat-scrollbar flex-1 space-y-3 overflow-y-scroll px-4 py-4 text-sm"
+                className="chat-scrollbar flex-1 space-y-3 overflow-y-auto px-4 py-4 text-sm"
               >
                 {messages.length === 0 ? (
                   <div className="flex flex-col items-center justify-center gap-4 px-2 py-10 text-center">
@@ -926,7 +986,11 @@ export function ChatWidget() {
                                 );
                               }
                               return (
-                                <AssistantChatMarkdown key={`${m.id}-t-${pi}`} message={m}>
+                                <AssistantChatMarkdown
+                                  key={`${m.id}-t-${pi}`}
+                                  message={m}
+                                  streaming={part.state === "streaming"}
+                                >
                                   {part.text}
                                 </AssistantChatMarkdown>
                               );
@@ -1029,15 +1093,10 @@ export function ChatWidget() {
                   <div className="sticky bottom-2 z-20 flex justify-end pr-1">
                     <button
                       type="button"
-                      onClick={() => {
-                        const el = scrollRef.current;
-                        if (!el) return;
-                        el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
-                        setAutoFollow(true);
-                      }}
-                      className="rounded-full border border-[var(--accent)]/50 bg-[var(--bg-card)]/95 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-[var(--accent)] shadow-[0_0_24px_-8px_var(--accent-glow)]"
+                      onClick={jumpToLatest}
+                      className="rounded-full border border-[var(--accent)]/35 bg-[var(--bg-card)]/92 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.12em] text-[var(--accent)] shadow-[0_0_14px_-10px_var(--accent-glow)]"
                     >
-                      Jump to latest
+                      Latest
                     </button>
                   </div>
                 ) : null}
@@ -1045,7 +1104,7 @@ export function ChatWidget() {
 
               {messages.length > 0 ? (
                 <div className="pointer-events-none absolute right-2 top-1/2 z-30 -translate-y-1/2">
-                  <div className="pointer-events-auto flex flex-col gap-1 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]/90 p-1 shadow-lg backdrop-blur">
+                  <div className="pointer-events-auto flex flex-col gap-1 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]/95 p-1 shadow-lg">
                     <button
                       type="button"
                       onClick={scrollTranscriptToTop}
@@ -1075,12 +1134,7 @@ export function ChatWidget() {
                     </button>
                     <button
                       type="button"
-                      onClick={() => {
-                        const el = scrollRef.current;
-                        if (!el) return;
-                        el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
-                        setAutoFollow(true);
-                      }}
+                      onClick={jumpToLatest}
                       className="rounded-md p-1.5 text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--accent)]"
                       title="Jump to latest"
                       aria-label="Jump to latest"
@@ -1282,7 +1336,7 @@ export function ChatWidget() {
           clearError();
           setTtsError(null);
         }}
-        className="chat-launcher-flagship glass-panel inline-flex h-14 w-14 items-center justify-center rounded-full shadow-[0_0_40px_-10px_var(--accent-glow)] ring-2 ring-[var(--accent)]/40 hover:ring-[var(--accent)]"
+        className="chat-launcher-flagship glass-panel glass-panel--static inline-flex h-14 w-14 items-center justify-center rounded-full shadow-[0_0_22px_-10px_var(--accent-glow)] ring-1 ring-[var(--accent)]/35 hover:ring-[var(--accent)]/80"
         aria-label={open ? "Close chat" : "Open chat"}
       >
         <MessageCircle className="h-6 w-6 text-[var(--accent)]" />

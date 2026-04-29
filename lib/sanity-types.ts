@@ -36,6 +36,7 @@ export type SanityPortfolioItem = {
   client?: string;
   summary?: string;
   vertical?: string;
+  liveUrl?: string;
   featured?: boolean;
 };
 

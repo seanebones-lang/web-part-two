@@ -1,15 +1,18 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { type PropsWithChildren, useEffect, useRef } from "react";
+import { type PropsWithChildren, useEffect, useRef, useState } from "react";
 
 import { ChatWidget } from "@/components/chat/chat-widget";
 
 export function AppProviders({ children }: PropsWithChildren) {
   const pathname = usePathname();
   const isStudio = pathname?.startsWith("/studio");
+  const [chatOpen, setChatOpen] = useState(false);
 
-  const lenisRef = useRef<{ destroy: () => void } | null>(null);
+  const lenisRef = useRef<{ destroy: () => void; stop?: () => void; start?: () => void } | null>(
+    null,
+  );
   const rafRef = useRef<number>(0);
 
   useEffect(() => {
@@ -46,10 +49,17 @@ export function AppProviders({ children }: PropsWithChildren) {
     };
   }, [isStudio]);
 
+  useEffect(() => {
+    const lenis = lenisRef.current;
+    if (!lenis) return;
+    if (chatOpen) lenis.stop?.();
+    else lenis.start?.();
+  }, [chatOpen]);
+
   return (
     <>
       {children}
-      {!isStudio ? <ChatWidget /> : null}
+      {!isStudio ? <ChatWidget onOpenChange={setChatOpen} /> : null}
     </>
   );
 }

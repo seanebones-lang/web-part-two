@@ -20,15 +20,15 @@ export default async function DevUpdatesPage() {
         Dev updates
       </h1>
       <p className="mt-4 text-[var(--text-muted)]">
-        Ship logs, infra notes, and product deltas — powered by Sanity when configured.
+        Ship logs, infrastructure notes, and product deltas from active delivery work.
       </p>
 
       <ul className="mt-12 space-y-4">
         {items.length === 0 ? (
           <li className="glass-panel rounded-xl p-8 text-[var(--text-muted)]">
-            No posts yet — add documents in{" "}
+            No posts yet — create your first entry in{" "}
             <Link href="/studio" className="text-[var(--accent)] hover:underline">
-              Sanity Studio
+              Content Studio
             </Link>
             .
           </li>

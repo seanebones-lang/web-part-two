@@ -46,6 +46,18 @@ export default async function PortfolioDetailPage(props: Props) {
         {doc.summary ? (
           <p className="mt-6 text-lg leading-relaxed text-[var(--text-muted)]">{doc.summary}</p>
         ) : null}
+        {doc.liveUrl ? (
+          <p className="mt-4">
+            <a
+              href={doc.liveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-[var(--accent)] hover:underline"
+            >
+              Visit live site →
+            </a>
+          </p>
+        ) : null}
       </header>
 
       {doc.metrics?.length ? (

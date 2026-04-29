@@ -21,7 +21,7 @@ export function SiteFooter() {
             <FooterLink href="/products">Products</FooterLink>
             <FooterLink href="/portfolio">Portfolio</FooterLink>
             <FooterLink href="/dev-updates">Dev updates</FooterLink>
-            <FooterLink href="/studio">Sanity Studio</FooterLink>
+            <FooterLink href="/studio">Content Studio</FooterLink>
           </div>
           <div className="flex flex-col gap-2">
             <span className="font-medium text-[var(--text-primary)]">Company</span>
@@ -45,7 +45,7 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-[var(--border-subtle)] px-4 py-6 text-center">
         <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[var(--text-muted)]">
-          Next.js · React · Sanity · Tailwind · AI SDK · xAI
+          Next.js · React · Headless CMS · Tailwind · AI SDK · xAI
         </p>
         <p className="mt-3 text-xs text-[var(--text-muted)]">
           © {new Date().getFullYear()} NextEleven. Enterprise AI that actually works.

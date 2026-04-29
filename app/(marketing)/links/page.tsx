@@ -26,14 +26,14 @@ export default async function LinksPage() {
     <div className="mx-auto max-w-4xl px-4 py-20 sm:px-6">
       <h1 className="text-4xl font-semibold tracking-tight text-[var(--text-primary)]">Links</h1>
       <p className="mt-4 text-[var(--text-muted)]">
-        Rolling index — pin strategic references inside Sanity for editorial ordering.
+        Rolling index of strategic references, launches, and useful resources.
       </p>
 
       {links.length === 0 ? (
         <div className="glass-panel mt-12 rounded-xl p-10 text-[var(--text-muted)]">
-          No links yet — add Link documents in{" "}
+          No links yet — add your first link in{" "}
           <Link href="/studio" className="text-[var(--accent)] hover:underline">
-            Sanity Studio
+            Content Studio
           </Link>
           .
         </div>

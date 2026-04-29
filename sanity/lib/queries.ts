@@ -44,6 +44,7 @@ export const portfolioListQuery = `*[_type == "portfolioItem"] | order(_createdA
   client,
   summary,
   vertical,
+  liveUrl,
   featured
 }`;
 
@@ -55,7 +56,8 @@ export const portfolioBySlugQuery = `*[_type == "portfolioItem" && slug.current 
   summary,
   body,
   metrics,
-  vertical
+  vertical,
+  liveUrl
 }`;
 
 export const linksQuery = `*[_type == "link"] | order(order asc, title asc) {
