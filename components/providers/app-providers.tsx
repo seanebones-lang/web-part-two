@@ -13,7 +13,16 @@ export function AppProviders({ children }: PropsWithChildren) {
   const lenisRef = useRef<{ destroy: () => void; stop?: () => void; start?: () => void } | null>(
     null,
   );
+  const chatOpenRef = useRef(false);
   const rafRef = useRef<number>(0);
+
+  useEffect(() => {
+    chatOpenRef.current = chatOpen;
+    const lenis = lenisRef.current;
+    if (!lenis) return;
+    if (chatOpen) lenis.stop?.();
+    else lenis.start?.();
+  }, [chatOpen]);
 
   useEffect(() => {
     if (isStudio) return;
@@ -34,6 +43,9 @@ export function AppProviders({ children }: PropsWithChildren) {
       });
       lenisRef.current = lenis;
 
+      // Apply current chat state immediately after Lenis loads
+      if (chatOpenRef.current) lenis.stop?.();
+
       function raf(time: number) {
         lenis.raf(time);
         rafRef.current = requestAnimationFrame(raf);
@@ -48,13 +60,6 @@ export function AppProviders({ children }: PropsWithChildren) {
       lenisRef.current = null;
     };
   }, [isStudio]);
-
-  useEffect(() => {
-    const lenis = lenisRef.current;
-    if (!lenis) return;
-    if (chatOpen) lenis.stop?.();
-    else lenis.start?.();
-  }, [chatOpen]);
 
   return (
     <>

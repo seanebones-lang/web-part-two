@@ -24,13 +24,8 @@
 }
 
 @layer base {
-  html {
-    overflow-x: hidden;
-  }
-
   body {
     min-height: 100dvh;
-    overflow-x: hidden;
   }
 
   ::selection {
