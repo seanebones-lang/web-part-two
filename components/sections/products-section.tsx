@@ -85,12 +85,23 @@ export function ProductsSection({
                 </p>
               ) : null}
               <div className="mt-auto flex justify-end pt-2">
-                <Link
-                  href="/#contact"
-                  className="text-sm font-medium text-[var(--accent)] transition group-hover:underline"
-                >
-                  {product.cta ?? "Learn more"} →
-                </Link>
+                {product.productUrl ? (
+                  <a
+                    href={product.productUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium text-[var(--accent)] transition group-hover:underline"
+                  >
+                    {product.cta ?? "View product"} →
+                  </a>
+                ) : (
+                  <Link
+                    href="/#contact"
+                    className="text-sm font-medium text-[var(--accent)] transition group-hover:underline"
+                  >
+                    {product.cta ?? "Learn more"} →
+                  </Link>
+                )}
               </div>
             </div>
             <div

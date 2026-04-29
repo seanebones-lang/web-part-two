@@ -9,6 +9,7 @@ export type SanityProduct = {
   tagline?: string;
   description?: string;
   cta?: string;
+  productUrl?: string;
   iconOrImage?: unknown;
 };
 

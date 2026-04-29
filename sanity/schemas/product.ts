@@ -42,6 +42,16 @@ export default defineType({
       type: "string",
     }),
     defineField({
+      name: "productUrl",
+      title: "Product URL",
+      type: "url",
+      validation: (Rule) =>
+        Rule.uri({
+          scheme: ["http", "https"],
+        }),
+      description: "Optional: link to the live product, demo, or landing page. When set, the CTA button links here instead of the contact section.",
+    }),
+    defineField({
       name: "iconOrImage",
       title: "Icon or image",
       type: "image",
