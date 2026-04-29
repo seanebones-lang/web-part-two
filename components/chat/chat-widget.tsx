@@ -4,8 +4,6 @@ import { useChat } from "@ai-sdk/react";
 import {
   Check,
   ChevronDown,
-  ChevronFirst,
-  ChevronLast,
   ChevronUp,
   Copy,
   Crown,
@@ -1102,48 +1100,6 @@ export function ChatWidget({ onOpenChange }: { onOpenChange?: (open: boolean) =>
                 ) : null}
               </div>
 
-              {messages.length > 0 ? (
-                <div className="pointer-events-none absolute right-2 top-1/2 z-30 -translate-y-1/2">
-                  <div className="pointer-events-auto flex flex-col gap-1 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]/95 p-1 shadow-lg">
-                    <button
-                      type="button"
-                      onClick={scrollTranscriptToTop}
-                      className="rounded-md p-1.5 text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-primary)]"
-                      title="Jump to top"
-                      aria-label="Jump to top"
-                    >
-                      <ChevronFirst className="h-4 w-4" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => scrollTranscriptByViewport("up")}
-                      className="rounded-md p-1.5 text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-primary)]"
-                      title="Scroll up"
-                      aria-label="Scroll up"
-                    >
-                      <ChevronUp className="h-4 w-4" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => scrollTranscriptByViewport("down")}
-                      className="rounded-md p-1.5 text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-primary)]"
-                      title="Scroll down"
-                      aria-label="Scroll down"
-                    >
-                      <ChevronDown className="h-4 w-4" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={jumpToLatest}
-                      className="rounded-md p-1.5 text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--accent)]"
-                      title="Jump to latest"
-                      aria-label="Jump to latest"
-                    >
-                      <ChevronLast className="h-4 w-4" />
-                    </button>
-                  </div>
-                </div>
-              ) : null}
 
               {error ? (
                 <p className="px-4 text-xs text-rose-400" role="alert">
