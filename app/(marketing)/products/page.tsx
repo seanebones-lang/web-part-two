@@ -19,10 +19,10 @@ export default async function ProductsPage() {
     <div>
       <div className="mx-auto max-w-6xl px-4 pb-4 pt-16 sm:px-6">
         <h1 className="text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
-          Products
+          Built to Ship With You
         </h1>
         <p className="mt-4 max-w-2xl text-[var(--text-muted)]">
-          Offerings designed to complement custom programs with clear value and outcomes.
+          Standalone tools and modules that extend or anchor any custom AI program.
         </p>
         <p className="mt-3 max-w-3xl text-sm text-[var(--text-muted)]">
           Flagship focus: production-grade chat systems and RAG-backed assistants that integrate with your

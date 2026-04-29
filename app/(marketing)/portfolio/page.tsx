@@ -17,10 +17,10 @@ export default async function PortfolioPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
       <h1 className="text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
-        Portfolio
+        Work We&apos;ve Shipped
       </h1>
       <p className="mt-4 max-w-2xl text-[var(--text-muted)]">
-        Case studies grounded in retrieval orchestration, governance, and deployment realism.
+        Selected engagements — from first build to production and beyond.
       </p>
 
       <div className="mt-12 grid gap-6 md:grid-cols-2">

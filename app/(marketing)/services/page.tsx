@@ -10,10 +10,10 @@ export default function ServicesPage() {
   return (
     <article className="mx-auto max-w-3xl px-4 py-20 sm:px-6">
       <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
-        Capabilities
+        Services
       </p>
       <h1 className="mt-4 text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
-        What we deliver
+        How We Work
       </h1>
       <p className="mt-6 text-[var(--text-muted)]">
         NextEleven combines AI consulting with hands-on engineering — from discovery and architecture

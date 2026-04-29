@@ -24,9 +24,9 @@ export default async function LinksPage() {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-20 sm:px-6">
-      <h1 className="text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">Links</h1>
+      <h1 className="text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">On Our Radar</h1>
       <p className="mt-4 text-[var(--text-muted)]">
-        Rolling index of strategic references, launches, and useful resources.
+        Resources, launches, and references we find worth sharing.
       </p>
 
       {links.length === 0 ? (
