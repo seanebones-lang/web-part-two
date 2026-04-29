@@ -66,7 +66,11 @@ const jsonLd = {
     email: CONTACT_EMAIL,
     contactType: "customer service",
   },
-  sameAs: [],
+  sameAs: [
+    "https://www.linkedin.com/in/mothership-ai",
+    "https://x.com/nextelevendev",
+    "https://github.com/seanebones-lang",
+  ],
 };
 
 export default function RootLayout({
