@@ -58,6 +58,7 @@ export default defineType({
       options: {
         list: [
           { title: "Websites", value: "websites" },
+          { title: "Mobile Apps", value: "mobile-apps" },
           { title: "Finance", value: "finance" },
           { title: "Healthcare", value: "healthcare" },
           { title: "SaaS", value: "saas" },
