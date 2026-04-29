@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "AI development and consulting, software and RAG systems, assistants, custom web experiences, mobile apps, and integration.",
+    "Custom AI systems, RAG pipelines, production software, mobile apps, and strategic consulting — from concept to production.",
 };
 
 export default function ServicesPage() {
@@ -70,8 +70,7 @@ export default function ServicesPage() {
               Mobile applications
             </h3>
             <p className="mt-2">
-              Native and cross-platform apps connected to your APIs, identity providers, and push /
-              offline requirements — built for App Store and Play workflows.
+              Native and cross-platform apps (Swift/SwiftUI, React Native, Flutter) connected to your APIs, auth providers, and offline requirements — shipped through App Store and Google Play.
             </p>
           </div>
           <div>

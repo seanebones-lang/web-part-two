@@ -1,6 +1,6 @@
 import { SectionEyebrow } from "@/components/ui/section-eyebrow";
 
-const logos = ["FinancialOS", "HealthScale", "CloudLedger", "LegalPilot", "DataMesh"];
+const industries = ["Finance", "Healthcare", "Legal", "SaaS", "Automotive", "Real Estate"];
 
 export function SocialProof() {
   return (
@@ -8,13 +8,13 @@ export function SocialProof() {
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <SectionEyebrow centered>00 · Signal</SectionEyebrow>
         <p className="text-center text-xs font-semibold uppercase tracking-[0.25em] text-[var(--text-muted)]">
-          Trusted patterns for regulated & high-stakes AI
+          Industries we&apos;ve shipped in
         </p>
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-5 opacity-90 sm:gap-x-12 sm:gap-y-8">
-          {logos.map((name) => (
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+          {industries.map((name) => (
             <span
               key={name}
-              className="text-lg font-semibold tracking-tight text-[var(--text-muted)]/70 transition hover:text-[var(--text-muted)]"
+              className="rounded-full border border-[var(--border-subtle)] bg-white/[0.04] px-4 py-1.5 text-sm font-medium tracking-wide text-[var(--text-muted)]/80"
             >
               {name}
             </span>
@@ -22,10 +22,10 @@ export function SocialProof() {
         </div>
         <div className="mx-auto mt-14 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-6">
           {[
-            { label: "Apps shipped fast", value: "60+" },
-            { label: "Typical custom cycle", value: "8–16 wks" },
-            { label: "Hallucination guardrails", value: "<50ms*" },
-            { label: "Deployment modes", value: "Any*" },
+            { label: "Apps shipped", value: "60+" },
+            { label: "Typical delivery cycle", value: "8–16 wks" },
+            { label: "Guardrail response time", value: "<50ms*" },
+            { label: "Deployment targets", value: "Any*" },
           ].map((item) => (
             <div
               key={item.label}

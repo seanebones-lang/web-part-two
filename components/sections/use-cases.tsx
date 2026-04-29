@@ -4,22 +4,22 @@ const stories = [
   {
     title: "Finance",
     desc:
-      "Portfolio analytics copilots pulling strictly governed datasets — retrieval proofs emitted alongside answers so traders trust automation.",
+      "Portfolio analytics assistants grounded in governed datasets — with cited sources alongside every answer so traders can verify what the model says.",
   },
   {
     title: "Healthcare",
     desc:
-      "Clinical workflows with PHI-aware pipelines — guardrails layered across multimodal intake without sacrificing bedside latency.",
+      "Clinical workflows with privacy-aware pipelines — guardrails layered across document, voice, and image intake without adding bedside delay.",
   },
   {
     title: "SaaS",
     desc:
-      "Embedded intelligence across core business systems — governed UI layers when every interaction needs audit trails.",
+      "Embedded intelligence across core business systems — governed UI layers when every interaction needs a full audit trail.",
   },
   {
     title: "Legal",
     desc:
-      "Citation-heavy drafting assistants — deterministic refusal paths until grounding thresholds clear privileged corpuses.",
+      "Citation-grounded drafting assistants — with hard refusal logic that blocks responses until sources clear your privileged document corpus.",
   },
 ];
 
@@ -32,7 +32,7 @@ export function UseCases() {
           Use cases — regulated & mission-critical AI
         </h2>
         <p className="mt-4 max-w-2xl text-[var(--text-muted)]">
-          Four repeatable vertical patterns — each tuned for audit trails, grounded retrieval, and deployment realism.
+          Repeatable vertical patterns — each tuned for audit trails, grounded retrieval, and real-world deployment constraints.
         </p>
         <p className="mt-3 max-w-3xl text-sm text-[var(--text-muted)]">
           Recent example: a dealership network deployment combining RAG and graph workflows for intelligent

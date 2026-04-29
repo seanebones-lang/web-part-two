@@ -11,8 +11,8 @@ export function SiteFooter() {
             NextEleven
           </p>
           <p className="mt-2 max-w-sm text-sm leading-relaxed text-[var(--text-muted)]">
-            AI Systems Builder & Operator Studio — custom AI applications, enterprise agents,
-            and hallucination-safe delivery from MVP to production.
+            We build AI systems that ship — custom applications, enterprise agents, and
+            production-grade assistants your team can actually own.
           </p>
         </div>
         <div className="flex flex-wrap gap-8 text-sm">

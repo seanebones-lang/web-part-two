@@ -20,7 +20,7 @@ export function CtaSection() {
               Ready for AI that ships — safely — on your rails?
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-[var(--text-muted)]">
-              Tell us about workloads, compliance posture, and timing — we&apos;ll respond with an executable path from MVP to hardened production.
+              Tell us about your use case, compliance requirements, and timeline — we&apos;ll map a clear path from first build to production.
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-4">
               <Link
@@ -34,12 +34,6 @@ export function CtaSection() {
                 className="neon-hover inline-flex rounded-full border border-[var(--border-subtle)] px-8 py-3 text-sm font-medium text-[var(--text-primary)] hover:bg-white/5"
               >
                 Call {CONTACT_PHONE_DISPLAY}
-              </Link>
-              <Link
-                href="/studio"
-                className="neon-hover inline-flex rounded-full border border-[var(--border-subtle)] px-8 py-3 text-sm font-medium text-[var(--text-primary)] hover:bg-white/5"
-              >
-                Open Content Studio
               </Link>
             </div>
           </div>

@@ -4,13 +4,13 @@ const moats = [
   {
     title: "Speed to production",
     body:
-      "Dense shipping cadence — dozens of App Store-ready surfaces and near-complete builds in compressed timelines while enterprise AI programs stay on 8–16 week rails.",
+      "Dozens of App Store-ready apps and production AI systems shipped — while structured enterprise programs hold to 8–16 week delivery rails.",
     badge: "Velocity",
   },
   {
     title: "Hallucination-aware defaults",
     body:
-      "Guardrail telemetry built-in — sub-50ms detection narratives with layered governance so risky completions never silently ship.",
+      "Guardrails are baked in from day one — sub-50ms detection with layered governance so unsafe responses never silently reach users.",
     badge: "Safety",
   },
   {
@@ -22,13 +22,13 @@ const moats = [
   {
     title: "Forward-deployed builders",
     body:
-      "Operators who actually compile — not deck-heavy account pods — owning instrumentation from IDE to production observability.",
+      "Engineers who write the code, not just the pitch — hands-on from architecture through production monitoring.",
     badge: "Craft",
   },
   {
     title: "Composable modules",
     body:
-      "Standalone product modules or bundled accelerators — runtime safety layers, packaged surfaces, vertical copilots, tuning pipelines — snapped together without rewriting cores.",
+      "Modular building blocks — safety layers, vertical templates, fine-tuning pipelines, and pre-built UI surfaces — that slot into existing systems without rewriting what already works.",
     badge: "Architecture",
   },
 ];
@@ -42,7 +42,7 @@ export function WhyNextEleven() {
           Why teams choose NextEleven
         </h2>
         <p className="mt-4 max-w-2xl text-[var(--text-muted)]">
-          Five differentiated pillars — each reinforced by operator-grade instrumentation instead of slide decks.
+          Five reasons teams keep choosing us — backed by working software, not decks.
         </p>
 
         <div className="mt-14 grid gap-5 md:grid-cols-2 lg:grid-cols-3">

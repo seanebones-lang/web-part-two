@@ -43,7 +43,7 @@ export function Hero() {
             transition={{ duration: 0.5 }}
             className="text-sm font-medium uppercase tracking-[0.2em] text-[var(--accent)]"
           >
-            NextEleven · AI engineering & consulting studio
+            NextEleven · AI Systems & Software Studio
           </motion.p>
           <h1 className="font-display mt-4 text-3xl font-semibold leading-[1.06] tracking-tight text-[var(--text-primary)] sm:text-4xl md:text-5xl lg:text-6xl">
             Enterprise AI That{" "}
@@ -55,19 +55,9 @@ export function Hero() {
             transition={{ duration: 0.55, delay: 0.12 }}
             className="mt-6 max-w-xl text-base leading-relaxed text-[var(--text-muted)] sm:text-lg"
           >
-            Specialized in AI development and consulting, production software, retrieval-augmented
-            pipelines (RAG), AI assistants and agents, custom websites using the latest frameworks and
-            product patterns, mobile apps for iOS and Android, integrations, and everything around making
-            intelligent products real in production.
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, delay: 0.16 }}
-            className="mt-4 max-w-xl text-sm leading-relaxed text-[var(--text-muted)]"
-          >
-            We also build dedicated chat systems and bots trained on your business data, and production RAG
-            implementations that stay grounded in live operational context.
+            We design and build AI-powered software — custom assistants, RAG pipelines, production APIs,
+            modern web experiences, and native mobile apps — from first prototype to the thing your team
+            actually runs.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 18 }}
@@ -138,8 +128,7 @@ export function Hero() {
               </li>
               <li className="flex gap-3">
                 <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(74,222,128,0.8)]" />
-                Real implementations include inventory intelligence, routing automation, and mobile-enabled
-                customer workflows.
+                Shipped work includes dealership inventory intelligence, email routing automation, and mobile customer workflows.
               </li>
             </ul>
           </div>

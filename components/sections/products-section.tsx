@@ -51,10 +51,10 @@ export function ProductsSection({
             Products that ship beside custom builds
           </h2>
         <p className="mt-4 text-[var(--text-muted)]">
-          Product and module listings for offerings that ship beside custom builds.
+          Ready-made surfaces and modules you can deploy standalone or layer into a custom program.
         </p>
         <p className="mt-3 text-sm text-[var(--text-muted)]">
-          Includes flagship conversational surfaces, RAG modules, and integration-ready building blocks.
+          Includes our flagship AI chat interfaces, retrieval modules, and integration-ready components.
         </p>
         </div>
       ) : null}
