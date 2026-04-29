@@ -662,8 +662,8 @@ export function ChatWidget({ onOpenChange }: { onOpenChange?: (open: boolean) =>
     <div
       className="fixed z-[60] flex flex-col items-end gap-3"
       style={{
-        bottom: "max(1rem, env(safe-area-inset-bottom, 1rem))",
-        right: "max(0.5rem, env(safe-area-inset-right, 0.5rem))",
+        bottom: "max(1.25rem, env(safe-area-inset-bottom, 1.25rem))",
+        right: "max(1.25rem, env(safe-area-inset-right, 1.25rem))",
       }}
     >
       <AnimatePresence>
