@@ -41,7 +41,7 @@ export function UseCases() {
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">
           {stories.map((s) => (
-            <article key={s.title} className="glass-panel rounded-2xl p-8 transition hover:border-[var(--accent)]/30">
+            <article key={s.title} className="glass-panel rounded-2xl p-5 transition hover:border-[var(--accent)]/30 sm:p-8">
               <h3 className="text-xl font-semibold text-[var(--text-primary)]">{s.title}</h3>
               <p className="mt-4 text-sm leading-relaxed text-[var(--text-muted)]">{s.desc}</p>
             </article>

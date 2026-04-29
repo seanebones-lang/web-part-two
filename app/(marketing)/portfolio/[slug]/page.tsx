@@ -40,11 +40,11 @@ export default async function PortfolioDetailPage(props: Props) {
           {doc.vertical ?? "Engagement"}
           {doc.client ? ` · ${doc.client}` : ""}
         </p>
-        <h1 className="mt-4 text-4xl font-semibold tracking-tight text-[var(--text-primary)]">
+        <h1 className="mt-4 text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
           {doc.title}
         </h1>
         {doc.summary ? (
-          <p className="mt-6 text-lg leading-relaxed text-[var(--text-muted)]">{doc.summary}</p>
+          <p className="mt-6 text-base leading-relaxed text-[var(--text-muted)] sm:text-lg">{doc.summary}</p>
         ) : null}
         {doc.liveUrl ? (
           <p className="mt-4">

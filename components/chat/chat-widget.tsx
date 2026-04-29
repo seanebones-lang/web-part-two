@@ -643,23 +643,6 @@ export function ChatWidget({ onOpenChange }: { onOpenChange?: (open: boolean) =>
     setTtsError(null);
   }
 
-  function scrollTranscriptByViewport(direction: "up" | "down") {
-    const el = scrollRef.current;
-    if (!el) return;
-    const delta = Math.max(180, Math.floor(el.clientHeight * 0.72));
-    const nextTop = direction === "up" ? el.scrollTop - delta : el.scrollTop + delta;
-    el.scrollTo({ top: nextTop, behavior: pending ? "auto" : "smooth" });
-    if (direction === "down" && isNearBottom(el, 90)) setAutoFollow(true);
-    if (direction === "up") setAutoFollow(false);
-  }
-
-  function scrollTranscriptToTop() {
-    const el = scrollRef.current;
-    if (!el) return;
-    el.scrollTo({ top: 0, behavior: "smooth" });
-    setAutoFollow(false);
-  }
-
   function jumpToLatest() {
     const el = scrollRef.current;
     if (!el) return;
@@ -668,13 +651,21 @@ export function ChatWidget({ onOpenChange }: { onOpenChange?: (open: boolean) =>
   }
 
   const panelHeight = expanded
-    ? "h-[min(92vh,calc(100dvh-3rem))]"
-    : "h-[min(560px,calc(100vh-6rem))]";
+    ? "h-[min(92dvh,calc(100dvh-2rem))]"
+    : "h-[min(580px,calc(100dvh-5rem))]";
 
-  const panelWidth = expanded ? "w-[min(100vw-1.5rem,520px)]" : "w-[min(100vw-2rem,440px)]";
+  const panelWidth = expanded
+    ? "w-[calc(100vw-1rem)] sm:w-[min(calc(100vw-2rem),520px)]"
+    : "w-[calc(100vw-1rem)] sm:w-[min(calc(100vw-2rem),440px)]";
 
   return (
-    <div className="fixed bottom-4 right-4 z-[60] flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
+    <div
+      className="fixed z-[60] flex flex-col items-end gap-3"
+      style={{
+        bottom: "max(1rem, env(safe-area-inset-bottom, 1rem))",
+        right: "max(0.5rem, env(safe-area-inset-right, 0.5rem))",
+      }}
+    >
       <AnimatePresence>
         {shortcutsOpen ? (
           <motion.div
@@ -766,7 +757,7 @@ export function ChatWidget({ onOpenChange }: { onOpenChange?: (open: boolean) =>
                     type="button"
                     onClick={() => setExpanded((v) => !v)}
                     title={expanded ? "Compact" : "Expand"}
-                    className="neon-hover rounded-lg p-2 text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-primary)]"
+                    className="neon-hover hidden rounded-lg p-2 text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-primary)] sm:inline-flex"
                     aria-label={expanded ? "Compact chat" : "Expand chat"}
                   >
                     <Maximize2 className={`h-4 w-4 ${expanded ? "rotate-180" : ""}`} />
@@ -775,7 +766,7 @@ export function ChatWidget({ onOpenChange }: { onOpenChange?: (open: boolean) =>
                     type="button"
                     onClick={() => setVoiceDrawerOpen((v) => !v)}
                     title="Realtime voice (local proxy)"
-                    className="neon-hover rounded-lg p-2 text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-primary)]"
+                    className="neon-hover hidden rounded-lg p-2 text-[var(--text-muted)] hover:bg-white/10 hover:text-[var(--text-primary)] sm:inline-flex"
                     aria-label="Realtime voice proxy"
                     aria-pressed={voiceDrawerOpen}
                   >

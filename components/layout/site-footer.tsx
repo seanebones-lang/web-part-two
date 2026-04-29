@@ -30,7 +30,7 @@ export function SiteFooter() {
             <FooterLink href="/#contact">Contact</FooterLink>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="text-[var(--text-muted)] transition hover:text-[var(--accent)]"
+              className="break-all text-[var(--text-muted)] transition hover:text-[var(--accent)]"
             >
               {CONTACT_EMAIL}
             </a>

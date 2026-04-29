@@ -12,7 +12,7 @@ export default function ServicesPage() {
       <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
         Capabilities
       </p>
-      <h1 className="mt-4 text-4xl font-semibold tracking-tight text-[var(--text-primary)]">
+      <h1 className="mt-4 text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
         What we deliver
       </h1>
       <p className="mt-6 text-[var(--text-muted)]">

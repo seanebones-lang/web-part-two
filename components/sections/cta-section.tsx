@@ -12,7 +12,7 @@ export function CtaSection() {
   return (
     <section id="contact" className="scroll-mt-24 pb-28 pt-8">
       <div className="mx-auto max-w-4xl px-4 text-center sm:px-6">
-        <div className="glass-panel relative overflow-hidden rounded-3xl px-6 py-16 ring-1 ring-[var(--accent)]/30">
+        <div className="glass-panel relative overflow-hidden rounded-3xl px-4 py-12 ring-1 ring-[var(--accent)]/30 sm:px-6 sm:py-16">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(34,211,238,0.15),transparent_55%)]" />
           <div className="relative">
             <SectionEyebrow centered>05 · Contact</SectionEyebrow>

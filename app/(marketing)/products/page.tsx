@@ -18,7 +18,7 @@ export default async function ProductsPage() {
   return (
     <div>
       <div className="mx-auto max-w-6xl px-4 pb-4 pt-16 sm:px-6">
-        <h1 className="text-4xl font-semibold tracking-tight text-[var(--text-primary)]">
+        <h1 className="text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
           Products
         </h1>
         <p className="mt-4 max-w-2xl text-[var(--text-muted)]">

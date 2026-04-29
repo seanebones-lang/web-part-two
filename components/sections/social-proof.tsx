@@ -10,7 +10,7 @@ export function SocialProof() {
         <p className="text-center text-xs font-semibold uppercase tracking-[0.25em] text-[var(--text-muted)]">
           Trusted patterns for regulated & high-stakes AI
         </p>
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-x-12 gap-y-8 opacity-90">
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-5 opacity-90 sm:gap-x-12 sm:gap-y-8">
           {logos.map((name) => (
             <span
               key={name}
@@ -20,7 +20,7 @@ export function SocialProof() {
             </span>
           ))}
         </div>
-        <div className="mx-auto mt-14 grid max-w-4xl grid-cols-2 gap-6 sm:grid-cols-4">
+        <div className="mx-auto mt-14 grid max-w-4xl grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-6">
           {[
             { label: "Apps shipped fast", value: "60+" },
             { label: "Typical custom cycle", value: "8–16 wks" },
@@ -31,7 +31,7 @@ export function SocialProof() {
               key={item.label}
               className="neon-surface rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)]/60 px-4 py-4 text-center"
             >
-              <div className="font-mono text-2xl font-semibold text-[var(--accent)]">{item.value}</div>
+              <div className="font-mono text-xl font-semibold text-[var(--accent)] sm:text-2xl">{item.value}</div>
               <div className="mt-1 text-xs text-[var(--text-muted)]">{item.label}</div>
             </div>
           ))}

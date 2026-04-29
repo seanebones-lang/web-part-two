@@ -60,10 +60,10 @@ export function SiteHeader() {
 function MobileNav() {
   return (
     <details className="relative md:hidden">
-      <summary className="list-none rounded-lg border border-[var(--border-subtle)] px-3 py-2 text-sm text-[var(--text-muted)] [&::-webkit-details-marker]:hidden">
+      <summary className="inline-flex min-h-[44px] min-w-[44px] list-none items-center justify-center rounded-lg border border-[var(--border-subtle)] px-3 py-2 text-sm text-[var(--text-muted)] [&::-webkit-details-marker]:hidden">
         Menu
       </summary>
-      <div className="absolute right-0 mt-2 w-52 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)] p-2 shadow-xl">
+      <div className="absolute right-0 z-50 mt-2 w-[min(13rem,calc(100vw-1rem))] rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)] p-2 shadow-xl">
         {nav.map((item) => (
           <Link
             key={item.href}

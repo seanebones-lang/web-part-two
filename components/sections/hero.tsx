@@ -45,7 +45,7 @@ export function Hero() {
           >
             NextEleven · AI engineering & consulting studio
           </motion.p>
-          <h1 className="font-display mt-4 text-4xl font-semibold leading-[1.06] tracking-tight text-[var(--text-primary)] sm:text-5xl lg:text-6xl">
+          <h1 className="font-display mt-4 text-3xl font-semibold leading-[1.06] tracking-tight text-[var(--text-primary)] sm:text-4xl md:text-5xl lg:text-6xl">
             Enterprise AI That{" "}
             <span className="text-gradient-animated">Actually Works</span>
           </h1>
@@ -53,7 +53,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, delay: 0.12 }}
-            className="mt-6 max-w-xl text-lg leading-relaxed text-[var(--text-muted)]"
+            className="mt-6 max-w-xl text-base leading-relaxed text-[var(--text-muted)] sm:text-lg"
           >
             Specialized in AI development and consulting, production software, retrieval-augmented
             pipelines (RAG), AI assistants and agents, custom websites using the latest frameworks and

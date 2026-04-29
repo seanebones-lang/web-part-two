@@ -16,7 +16,7 @@ export default async function PortfolioPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6">
-      <h1 className="text-4xl font-semibold tracking-tight text-[var(--text-primary)]">
+      <h1 className="text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
         Portfolio
       </h1>
       <p className="mt-4 max-w-2xl text-[var(--text-muted)]">
@@ -37,7 +37,7 @@ export default async function PortfolioPage() {
             <Link
               key={item._id}
               href={`/portfolio/${item.slug?.current ?? ""}`}
-              className="glass-panel flex flex-col rounded-2xl p-8 transition hover:border-[var(--accent)]/35"
+              className="glass-panel flex flex-col rounded-2xl p-5 transition hover:border-[var(--accent)]/35 sm:p-8"
             >
               <div className="flex flex-wrap items-center gap-2">
                 {item.vertical ? (
@@ -61,7 +61,7 @@ export default async function PortfolioPage() {
                 </p>
               ) : null}
               {item.liveUrl ? (
-                <span className="mt-4 text-xs text-[var(--text-muted)]">Live: {item.liveUrl}</span>
+                <span className="mt-4 break-all text-xs text-[var(--text-muted)]">Live: {item.liveUrl}</span>
               ) : null}
               <span className="mt-6 text-sm font-medium text-[var(--accent)]">Read story →</span>
             </Link>
