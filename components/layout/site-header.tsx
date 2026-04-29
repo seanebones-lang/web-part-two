@@ -10,6 +10,7 @@ const nav = [
   { href: "/dev-updates", label: "Dev updates" },
   { href: "/links", label: "Links" },
   { href: "/services", label: "Services" },
+  { href: "/about", label: "About" },
 ];
 
 export function SiteHeader() {

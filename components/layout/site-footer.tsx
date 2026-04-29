@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { CONTACT_EMAIL, CONTACT_PHONE_DISPLAY, CONTACT_PHONE_HREF } from "@/lib/contact";
+import { SOCIAL_LINKS } from "@/lib/social";
 
 export function SiteFooter() {
   return (
@@ -25,9 +26,12 @@ export function SiteFooter() {
           </div>
           <div className="flex flex-col gap-2">
             <span className="font-medium text-[var(--text-primary)]">Company</span>
+            <FooterLink href="/about">About</FooterLink>
             <FooterLink href="/services">Services</FooterLink>
             <FooterLink href="/links">Links</FooterLink>
             <FooterLink href="/#contact">Contact</FooterLink>
+            <FooterLink href="/privacy">Privacy</FooterLink>
+            <FooterLink href="/terms">Terms</FooterLink>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
               className="break-all text-[var(--text-muted)] transition hover:text-[var(--accent)]"
@@ -40,6 +44,33 @@ export function SiteFooter() {
             >
               {CONTACT_PHONE_DISPLAY}
             </a>
+          </div>
+          <div className="flex flex-col gap-2">
+            <span className="font-medium text-[var(--text-primary)]">Follow</span>
+            {SOCIAL_LINKS.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={link.label}
+                className="flex items-center gap-2 text-[var(--text-muted)] transition hover:text-[var(--accent)]"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="h-4 w-4 shrink-0"
+                  aria-hidden="true"
+                >
+                  <path d={link.iconPath} />
+                </svg>
+                {link.label}
+              </a>
+            ))}
           </div>
         </div>
       </div>
