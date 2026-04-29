@@ -1,12 +1,20 @@
 import { createClient } from "next-sanity";
 
-import { apiVersion, dataset, projectId, sanityConfigured } from "../env";
+import {
+  apiVersion,
+  dataset,
+  projectId,
+  sanityConfigured,
+  sanityReadToken,
+} from "../env";
 
 export const client = createClient({
   projectId: projectId || "placeholder",
   dataset: dataset || "production",
   apiVersion,
-  useCdn: true,
+  /** CDN ignores auth; disable CDN when a read token is present. */
+  useCdn: !sanityReadToken,
+  token: sanityReadToken || undefined,
 });
 
 export async function sanityFetch<T>(
