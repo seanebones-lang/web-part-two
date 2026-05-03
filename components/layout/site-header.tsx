@@ -1,17 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
 
+import { MobileNav } from "@/components/layout/mobile-nav";
+import { siteNavItems } from "@/lib/nav-items";
 import { cn } from "@/lib/utils";
-
-const nav = [
-  { href: "/#why", label: "Why us" },
-  { href: "/products", label: "Products" },
-  { href: "/portfolio", label: "Portfolio" },
-  { href: "/dev-updates", label: "Dev updates" },
-  { href: "/links", label: "Links" },
-  { href: "/services", label: "Services" },
-  { href: "/about", label: "About" },
-];
 
 export function SiteHeader() {
   return (
@@ -31,7 +23,7 @@ export function SiteHeader() {
           <span className="text-[var(--text-primary)]">NextEleven</span>
         </Link>
         <nav className="hidden items-center gap-1 md:flex">
-          {nav.map((item) => (
+          {siteNavItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
@@ -55,32 +47,5 @@ export function SiteHeader() {
         </div>
       </div>
     </header>
-  );
-}
-
-function MobileNav() {
-  return (
-    <details className="relative md:hidden">
-      <summary className="inline-flex min-h-[44px] min-w-[44px] list-none items-center justify-center rounded-lg border border-[var(--border-subtle)] px-3 py-2 text-sm text-[var(--text-muted)] [&::-webkit-details-marker]:hidden">
-        Menu
-      </summary>
-      <div className="absolute right-0 z-50 mt-2 w-[min(13rem,calc(100vw-1rem))] rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-card)] p-2 shadow-xl">
-        {nav.map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className="block rounded-lg px-3 py-2 text-sm text-[var(--text-primary)] hover:bg-white/5"
-          >
-            {item.label}
-          </Link>
-        ))}
-        <Link
-          href="/#contact"
-          className="neon-hover mt-1 block rounded-lg bg-[var(--accent)] px-3 py-2 text-center text-sm font-medium text-[var(--bg-deep)]"
-        >
-          Contact
-        </Link>
-      </div>
-    </details>
   );
 }
