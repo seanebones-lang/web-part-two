@@ -12,32 +12,12 @@ type Props = {
   showIntro?: boolean;
 };
 
-const FALLBACK: SanityProduct[] = [
-  {
-    _id: "placeholder-a",
-    name: "Example offering A",
-    slug: { current: "example-offering-a" },
-    tagline: "Launch your first product card",
-    description:
-      "Placeholder card — add your real product content to replace this tile.",
-    cta: "Contact",
-  },
-  {
-    _id: "placeholder-b",
-    name: "Example offering B",
-    slug: { current: "example-offering-b" },
-    tagline: "Placeholder until content is live",
-    description:
-      "Swap names, descriptions, CTAs, and imagery from your dataset.",
-    cta: "Contact",
-  },
-];
-
 export function ProductsSection({
   products,
   showIntro = true,
 }: Props) {
-  const list = products?.length ? products : FALLBACK;
+  const list = products ?? [];
+  const hasProducts = list.length > 0;
 
   return (
     <section
@@ -48,74 +28,90 @@ export function ProductsSection({
         <div className="max-w-2xl">
           <SectionEyebrow>03 · Platforms</SectionEyebrow>
           <h2 className="mt-1 text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
-            Products that ship beside custom builds
+            Products published from Content Studio
           </h2>
-        <p className="mt-4 text-[var(--text-muted)]">
-          Ready-made surfaces and modules you can deploy standalone or layer into a custom program.
-        </p>
-        <p className="mt-3 text-sm text-[var(--text-muted)]">
-          Includes our flagship AI chat interfaces, retrieval modules, and integration-ready components.
-        </p>
+          <p className="mt-4 text-[var(--text-muted)]">
+            Each card below mirrors your Sanity Product documents — names, descriptions, CTAs, imagery, and outbound URLs stay aligned with what you edit in Studio.
+          </p>
+          <p className="mt-3 text-sm text-[var(--text-muted)]">
+            App Store and Google Play destinations usually belong in Links (we detect common storefront URLs). Custom builds and engagements belong in Portfolio when you want a longer narrative.
+          </p>
         </div>
       ) : null}
 
-      <div className={showIntro ? "mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3" : "grid gap-6 md:grid-cols-2 lg:grid-cols-3"}>
-        {list.map((product, i) => (
-          <article
-            key={product._id}
-            className={cn(
-              "glass-panel group relative overflow-hidden rounded-2xl p-6 transition",
-              "hover:border-[var(--accent)]/40 hover:shadow-[0_0_40px_-12px_var(--accent-glow)]",
-            )}
-            style={{ animationDelay: `${i * 60}ms` }}
-          >
-            <div className="relative z-10 flex flex-col gap-4">
-              <ProductThumb product={product} />
-              <div>
-                <h3 className="text-lg font-semibold text-[var(--text-primary)]">
-                  {product.name}
-                </h3>
-                {product.tagline ? (
-                  <p className="mt-1 text-sm text-[var(--accent)]">{product.tagline}</p>
+      {!hasProducts ? (
+        <div className={cn(showIntro ? "mt-12" : "", "glass-panel rounded-2xl p-10 text-center")}>
+          <p className="text-[var(--text-muted)]">
+            No Product documents published yet — add your offerings in{" "}
+            <Link href="/studio" className="font-medium text-[var(--accent)] hover:underline">
+              Content Studio
+            </Link>{" "}
+            to populate this section automatically.
+          </p>
+        </div>
+      ) : (
+        <div
+          className={
+            showIntro ? "mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3" : "grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+          }
+        >
+          {list.map((product, i) => (
+            <article
+              key={product._id}
+              className={cn(
+                "glass-panel group relative overflow-hidden rounded-2xl p-6 transition",
+                "hover:border-[var(--accent)]/40 hover:shadow-[0_0_40px_-12px_var(--accent-glow)]",
+              )}
+              style={{ animationDelay: `${i * 60}ms` }}
+            >
+              <div className="relative z-10 flex flex-col gap-4">
+                <ProductThumb product={product} />
+                <div>
+                  <h3 className="text-lg font-semibold text-[var(--text-primary)]">
+                    {product.name}
+                  </h3>
+                  {product.tagline ? (
+                    <p className="mt-1 text-sm text-[var(--accent)]">{product.tagline}</p>
+                  ) : null}
+                </div>
+                {product.description ? (
+                  <p className="text-sm leading-relaxed text-[var(--text-muted)]">
+                    {product.description}
+                  </p>
                 ) : null}
+                <div className="mt-auto flex justify-end pt-2">
+                  {product.productUrl ? (
+                    <a
+                      href={product.productUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-medium text-[var(--accent)] transition group-hover:underline"
+                    >
+                      {product.cta ?? "View product"} →
+                    </a>
+                  ) : (
+                    <Link
+                      href="/#contact"
+                      className="text-sm font-medium text-[var(--accent)] transition group-hover:underline"
+                    >
+                      {product.cta ?? "Learn more"} →
+                    </Link>
+                  )}
+                </div>
               </div>
-              {product.description ? (
-                <p className="text-sm leading-relaxed text-[var(--text-muted)]">
-                  {product.description}
-                </p>
-              ) : null}
-              <div className="mt-auto flex justify-end pt-2">
-                {product.productUrl ? (
-                  <a
-                    href={product.productUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm font-medium text-[var(--accent)] transition group-hover:underline"
-                  >
-                    {product.cta ?? "View product"} →
-                  </a>
-                ) : (
-                  <Link
-                    href="/#contact"
-                    className="text-sm font-medium text-[var(--accent)] transition group-hover:underline"
-                  >
-                    {product.cta ?? "Learn more"} →
-                  </Link>
-                )}
-              </div>
-            </div>
-            <div
-              className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full opacity-30 blur-3xl transition group-hover:opacity-50"
-              style={{
-                background:
-                  i % 2 === 0
-                    ? "radial-gradient(circle, var(--accent-glow), transparent)"
-                    : "radial-gradient(circle, rgba(167,139,250,0.5), transparent)",
-              }}
-            />
-          </article>
-        ))}
-      </div>
+              <div
+                className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full opacity-30 blur-3xl transition group-hover:opacity-50"
+                style={{
+                  background:
+                    i % 2 === 0
+                      ? "radial-gradient(circle, var(--accent-glow), transparent)"
+                      : "radial-gradient(circle, rgba(167,139,250,0.5), transparent)",
+                }}
+              />
+            </article>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
@@ -146,9 +142,11 @@ function ProductThumb({ product }: { product: SanityProduct }) {
     }
   }
 
+  const initials = (product.name ?? "PR").slice(0, 2).toUpperCase();
+
   return (
     <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-[var(--accent-dim)] font-mono text-xs font-bold text-[var(--accent)] ring-1 ring-[var(--accent)]/30">
-      {product.name.slice(0, 2).toUpperCase()}
+      {initials}
     </div>
   );
 }

@@ -12,7 +12,7 @@ export function Team() {
           Operators shipping instrumentation — not slide decks
         </h2>
         <p className="mx-auto mt-6 max-w-2xl text-[var(--text-muted)]">
-          Forward-deployed engineers owning IDE → observability paths — 60+ production-grade surfaces shipped on compressed timelines while bespoke AI programs maintain enterprise-grade governance across multimodal + retrieval-heavy stacks.
+          Forward-deployed engineers owning IDE → observability paths — hands-on delivery across retrieval-heavy and multimodal stacks. Offerings, links, and portfolio entries on this site are published from Content Studio so what visitors read tracks what you approve.
         </p>
       </div>
     </section>

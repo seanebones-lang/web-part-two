@@ -2,16 +2,26 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 import type { SanityLink } from "@/lib/sanity-types";
+import { filterMobileStoreLinks } from "@/lib/sanity-marketing-context";
 import { linksQuery } from "@/sanity/lib/queries";
 import { sanityFetch } from "@/sanity/lib/client";
 
-export const metadata: Metadata = {
-  title: "Links",
-  description: "Curated links — reports, launches, and references.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const links = (await sanityFetch<SanityLink[]>(linksQuery)) ?? [];
+  const mobileCount = filterMobileStoreLinks(links).length;
+  const description =
+    mobileCount > 0
+      ? `Curated links from Content Studio — includes ${mobileCount} mobile storefront listing${mobileCount === 1 ? "" : "s"} (App Store / Play).`
+      : "Curated links from Content Studio — reports, launches, storefront URLs, and references.";
+  return {
+    title: "Links",
+    description,
+  };
+}
 
 export default async function LinksPage() {
   const links = (await sanityFetch<SanityLink[]>(linksQuery)) ?? [];
+  const mobileLinks = filterMobileStoreLinks(links);
 
   const grouped = links.reduce<Record<string, SanityLink[]>>((acc, link) => {
     const cat = link.category?.trim() || "General";
@@ -26,8 +36,13 @@ export default async function LinksPage() {
     <div className="mx-auto max-w-4xl px-4 py-20 sm:px-6">
       <h1 className="text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">On Our Radar</h1>
       <p className="mt-4 text-[var(--text-muted)]">
-        Resources, launches, and references we find worth sharing.
+        Everything listed below comes straight from your Sanity Link documents — titles, descriptions, categories, and URLs stay what you publish in Content Studio.
       </p>
+      {mobileLinks.length > 0 ? (
+        <p className="mt-3 text-sm text-[var(--text-muted)]">
+          We detected {mobileLinks.length} App Store / Play URL{mobileLinks.length === 1 ? "" : "s"} in this list; pin or categorize them in Studio to match how you want them grouped.
+        </p>
+      ) : null}
 
       {links.length === 0 ? (
         <div className="glass-panel mt-12 rounded-xl p-10 text-[var(--text-muted)]">

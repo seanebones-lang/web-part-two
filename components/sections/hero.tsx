@@ -128,7 +128,7 @@ export function Hero() {
               </li>
               <li className="flex gap-3">
                 <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(74,222,128,0.8)]" />
-                Shipped work includes dealership inventory intelligence, email routing automation, and mobile customer workflows.
+                Products, mobile storefront links, and portfolio highlights on this site are published from Content Studio — so visitors see the same titles and URLs you approve.
               </li>
             </ul>
           </div>

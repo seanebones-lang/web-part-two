@@ -9,7 +9,7 @@ import { ProductsSection } from "@/components/sections/products-section";
 export const metadata: Metadata = {
   title: "Products",
   description:
-    "Platforms and modules we ship alongside custom builds.",
+    "Offerings published from Content Studio — synced with your Sanity Product documents.",
 };
 
 export default async function ProductsPage() {
@@ -22,11 +22,10 @@ export default async function ProductsPage() {
           Built to Ship With You
         </h1>
         <p className="mt-4 max-w-2xl text-[var(--text-muted)]">
-          Standalone tools and modules that extend or anchor any custom AI program.
+          This page reflects your Product documents in Content Studio — edit there to update titles, descriptions, imagery, and outbound links.
         </p>
         <p className="mt-3 max-w-3xl text-sm text-[var(--text-muted)]">
-          Flagship focus: production-grade chat systems and RAG-backed assistants that integrate with your
-          existing web, mobile, and internal software surfaces.
+          For App Store and Play listings, use Links documents (storefront URLs); this grid stays dedicated to Product entries.
         </p>
       </div>
       <ProductsSection products={products} showIntro={false} />

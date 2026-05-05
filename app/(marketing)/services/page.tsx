@@ -1,12 +1,25 @@
+import Link from "next/link";
 import type { Metadata } from "next";
+
+import type { SanityPortfolioItem } from "@/lib/sanity-types";
+import { pickPortfolioSpotlight } from "@/lib/sanity-marketing-context";
+import { portfolioListQuery } from "@/sanity/lib/queries";
+import { sanityFetch } from "@/sanity/lib/client";
 
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Custom AI systems, RAG pipelines, production software, mobile apps, and strategic consulting — from concept to production.",
+    "Custom AI systems, RAG pipelines, production software, mobile apps, and consulting — described here; highlights under Portfolio and Products come from Content Studio.",
 };
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const portfolio = (await sanityFetch<SanityPortfolioItem[]>(portfolioListQuery)) ?? [];
+  const spotlight = pickPortfolioSpotlight(portfolio);
+  const spotlightHref =
+    spotlight?.slug?.current != null && spotlight.slug.current !== ""
+      ? `/portfolio/${spotlight.slug.current}`
+      : "/portfolio";
+
   return (
     <article className="mx-auto max-w-3xl px-4 py-20 sm:px-6">
       <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">
@@ -16,8 +29,7 @@ export default function ServicesPage() {
         How We Work
       </h1>
       <p className="mt-6 text-[var(--text-muted)]">
-        NextEleven combines AI consulting with hands-on engineering — from discovery and architecture
-        through shipping software your team can own.
+        NextEleven combines AI consulting with hands-on engineering — from discovery and architecture through shipping software your team can own. Offerings and case summaries you want public-facing live under Products and Portfolio in Content Studio.
       </p>
 
       <section id="line-a" className="scroll-mt-28 mt-16 border-t border-[var(--border-subtle)] pt-12">
@@ -46,7 +58,11 @@ export default function ServicesPage() {
         </h2>
         <p className="mt-4 text-[var(--text-muted)]">
           Packaged surfaces — safety tooling, vertical templates, copilots, fine-tuning workflows —
-          composed into larger programs or deployed as focused additions to what you already run.
+          composed into larger programs or deployed as focused additions to what you already run. Tiles on{" "}
+          <Link href="/products" className="text-[var(--accent)] hover:underline">
+            Products
+          </Link>{" "}
+          mirror your Sanity Product documents.
         </p>
       </section>
 
@@ -70,7 +86,11 @@ export default function ServicesPage() {
               Mobile applications
             </h3>
             <p className="mt-2">
-              Native and cross-platform apps (Swift/SwiftUI, React Native, Flutter) connected to your APIs, auth providers, and offline requirements — shipped through App Store and Google Play.
+              Native and cross-platform apps connected to your APIs, auth providers, and offline requirements — storefront URLs you want surfaced publicly belong in{" "}
+              <Link href="/links" className="text-[var(--accent)] hover:underline">
+                Links
+              </Link>{" "}
+              so they stay centralized with the rest of your curated destinations.
             </p>
           </div>
           <div>
@@ -93,22 +113,29 @@ export default function ServicesPage() {
         </p>
         <div className="mt-6 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)]/40 p-6">
           <h3 className="text-lg font-semibold text-[var(--text-primary)]">
-            Featured implementation: dealership intelligence system
+            {spotlight ? "Spotlight from Portfolio" : "Portfolio-driven examples"}
           </h3>
-          <ul className="mt-4 space-y-3 text-[var(--text-muted)]">
-            <li>
-              <strong className="text-[var(--text-primary)]">Intelligent email routing:</strong> incoming
-              customer emails are triaged by urgency and routine inquiries are answered automatically.
-            </li>
-            <li>
-              <strong className="text-[var(--text-primary)]">Multi-location graph inventory:</strong>{" "}
-              vehicle stock is tracked across 7 dealership locations with near real-time visibility.
-            </li>
-            <li>
-              <strong className="text-[var(--text-primary)]">Proactive stock alerts:</strong> management is
-              notified early when inventory trends low to reduce missed sales.
-            </li>
-          </ul>
+          {spotlight ? (
+            <>
+              {spotlight.client ? (
+                <p className="mt-2 text-xs uppercase tracking-wider text-[var(--text-muted)]">{spotlight.client}</p>
+              ) : null}
+              <p className="mt-4 text-sm leading-relaxed text-[var(--text-muted)]">
+                {spotlight.summary ??
+                  "Open this case study for the full narrative, metrics, and outcomes — edited in Content Studio."}
+              </p>
+              <Link
+                href={spotlightHref}
+                className="mt-6 inline-flex text-sm font-medium text-[var(--accent)] hover:underline"
+              >
+                Read case study →
+              </Link>
+            </>
+          ) : (
+            <p className="mt-4 text-sm text-[var(--text-muted)]">
+              Add Portfolio entries (mark one featured if you want it prioritized) to surface a concrete implementation story here automatically.
+            </p>
+          )}
         </div>
       </section>
 

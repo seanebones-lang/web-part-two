@@ -30,11 +30,11 @@ export const metadata: Metadata = {
     template: "%s · NextEleven",
   },
   description:
-    "We build AI systems that ship — custom assistants, RAG pipelines, production APIs, and native mobile apps from first prototype to production.",
+    "We build AI systems that ship — custom assistants, RAG pipelines, production APIs, and native mobile apps from first prototype to production. Products, curated Links, and portfolio highlights on this site sync from Content Studio.",
   openGraph: {
     title: "NextEleven — Enterprise AI That Actually Works",
     description:
-      "Custom AI systems, RAG pipelines, and production software — from first build to the thing your team actually runs.",
+      "Custom AI systems, RAG pipelines, and production software — from first build to what your team runs. Public-facing offerings and links publish from Content Studio.",
     siteName: "NextEleven",
     locale: "en_US",
     type: "website",

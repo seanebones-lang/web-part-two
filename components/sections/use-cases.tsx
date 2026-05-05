@@ -35,8 +35,7 @@ export function UseCases() {
           Repeatable vertical patterns — each tuned for audit trails, grounded retrieval, and real-world deployment constraints.
         </p>
         <p className="mt-3 max-w-3xl text-sm text-[var(--text-muted)]">
-          Recent example: a dealership network deployment combining RAG and graph workflows for intelligent
-          email triage, cross-location inventory visibility, and proactive low-stock alerts.
+          Published case studies and summaries appear under Portfolio when you add them in Content Studio — keeping narratives aligned with what you choose to show publicly.
         </p>
 
         <div className="mt-12 grid gap-6 md:grid-cols-2">

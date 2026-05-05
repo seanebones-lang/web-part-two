@@ -6,7 +6,7 @@ import { CONTACT_EMAIL } from "@/lib/contact";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Learn about NextEleven and Mothership AI — who we are, how we build, and why we do it this way.",
+    "Learn about NextEleven and Mothership AI — who we are, how we build, and how Products, Links, and Portfolio stay synced via Content Studio.",
 };
 
 export default function AboutPage() {
@@ -24,7 +24,7 @@ export default function AboutPage() {
         NextEleven is a small, focused AI and software studio. We design and build
         production-grade AI systems — custom assistants, retrieval pipelines, APIs, and
         native mobile apps — for founders, operators, and enterprise teams who need real
-        results, not demos.
+        results, not demos. Highlights you see on this site — Products, curated Links (including storefront URLs when you add them), and Portfolio case studies — are authored in Content Studio so messaging stays consistent with what you approve.
       </p>
 
       {/* Two-brand explanation */}

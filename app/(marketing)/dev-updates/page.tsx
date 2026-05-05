@@ -7,7 +7,7 @@ import { sanityFetch } from "@/sanity/lib/client";
 
 export const metadata: Metadata = {
   title: "Dev updates",
-  description: "Engineering notes and changelog entries from NextEleven.",
+  description: "Engineering notes and changelog entries published from Content Studio.",
 };
 
 export default async function DevUpdatesPage() {
@@ -20,7 +20,7 @@ export default async function DevUpdatesPage() {
         What We&apos;re Building
       </h1>
       <p className="mt-4 text-[var(--text-muted)]">
-        Notes from active development — features shipped, lessons learned, and what&apos;s next.
+        Notes from active development — authored as Dev Update documents in Content Studio so what you publish here matches your changelog narrative.
       </p>
 
       <ul className="mt-12 space-y-4">

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import { PortableBody } from "@/components/portable-text";
 import type { SanityPortfolioItem } from "@/lib/sanity-types";
+import { portfolioVerticalLabel } from "@/lib/sanity-marketing-context";
 import { portfolioBySlugQuery } from "@/sanity/lib/queries";
 import { sanityFetch } from "@/sanity/lib/client";
 
@@ -30,6 +31,8 @@ export default async function PortfolioDetailPage(props: Props) {
 
   if (!doc) notFound();
 
+  const verticalDisplay = portfolioVerticalLabel(doc.vertical) ?? "Engagement";
+
   return (
     <article className="mx-auto max-w-3xl px-4 py-20 sm:px-6">
       <Link href="/portfolio" className="text-sm text-[var(--accent)] hover:underline">
@@ -37,7 +40,7 @@ export default async function PortfolioDetailPage(props: Props) {
       </Link>
       <header className="mt-6">
         <p className="text-xs uppercase tracking-[0.3em] text-[var(--text-muted)]">
-          {doc.vertical ?? "Engagement"}
+          {verticalDisplay}
           {doc.client ? ` · ${doc.client}` : ""}
         </p>
         <h1 className="mt-4 text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
